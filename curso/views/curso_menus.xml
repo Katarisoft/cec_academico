@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+  <data>
+    <menuitem id="menu_cec" name="CEC Académico"/>
+    <menuitem id="menu_configuration" name="Planificación" parent="menu_cec"/>
+    <menuitem id="menu_inscritos" name="Inscritos" parent="menu_cec"/>
+    <menuitem action="action_course" id="menu_course" name="Cursos" parent="menu_configuration" sequence="1"/>
+    <menuitem action="action_learning_unit" id="menu_learning_unit" name="Unidades de aprendizaje" parent="menu_configuration" sequence="2"/>
+    <menuitem action="action_course_student" id="menu_couser_student" name="Estudiantes" parent="menu_configuration" sequence="3"/>
+    <menuitem action="action_course_student_inscription" id="menu_couser_student_inscription" name="Inscripción" parent="menu_configuration" sequence="4"/>
+  </data>
+</openerp>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+  <data>
+    <menuitem id="menu_docentes" name="Docentes" parent="curso.menu_cec"/>
+    <menuitem id="menu_datos" name="Registro Docentes" sequence="0" parent="menu_docentes" action="action_partner_c"/>
+    
+    <!--<record id="menu_curriculum" model="ir.ui.menu">
+      <field name="groups_id" eval="[(4,ref('iaen_base.iaen_base_user'))]"/>
+    </record>-->
+  </data>
+</openerp>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- Ingreso de Cursos en el sistema -->
+    <record id="action_course" model="ir.actions.act_window">
+      <field name="name">Curso</field>
+      <field name="res_model">course</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Ingreso de Unidades de aprendizaje en el sistema -->
+    <record id="action_learning_unit" model="ir.actions.act_window">
+      <field name="name">Unidades de Aprendizaje</field>
+      <field name="res_model">learning.unit</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Ingreso de Cursos x estudiante en el sistema -->
+    <record id="action_course_student" model="ir.actions.act_window">
+      <field name="name">Estudiantes</field>
+      <field name="res_model">course.student</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    <!-- Wizard inscripción alumnos a curso en el sistema -->
+    <record id="action_course_student_inscription" model="ir.actions.act_window">
+      <field name="name">Estudiantes</field>
+      <field name="res_model">course.student.inscription</field>
+      <field name="view_mode">form</field>
+      <field name="target">new</field>
+    </record>
+
+
+  </data>
+</openerp>

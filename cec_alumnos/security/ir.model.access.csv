@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_instruction_info,instruction_info,model_instruction_info,iaen_base.iaen_base_user,1,1,1,1
+access_title_info,title_info,model_title_info,iaen_base.iaen_base_user,1,1,1,1
+access_experience_info,experience_info,model_experience_info,iaen_base.iaen_base_user,1,1,1,1
+access_publication_info,publication_info,model_publication_info,iaen_base.iaen_base_user,1,1,1,1
+access_evaluation_info,evaluation_info,model_evaluation_info,iaen_base.iaen_base_user,1,1,1,1
+access_experience_info,experience_info,model_experience_info,iaen_base.iaen_base_user,1,1,1,1
+access_project_info,project_info,model_project_info,iaen_base.iaen_base_user,1,1,1,1
+access_tutoring_info,tutoring_info,model_tutoring_info,iaen_base.iaen_base_user,1,1,1,1
+access_language_info,language_info,model_language_info,iaen_base.iaen_base_user,1,1,1,1
+access_res_partner,res_partner,model_res_partner,iaen_base.iaen_base_user,1,1,0,0
