@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <openerp>
-  <data noupdate="1">
+  <data noupdate="0">
     <record model="res.groups" id="iaen_base_manager">
       <field name="name">IAEN manager</field>
       <field name="category_id" search="[('name','=','Administration')]"></field>
@@ -11,5 +11,16 @@
       <field name="name">IAEN user</field>
       <field name="category_id" search="[('name','=','Sharing')]"></field>
     </record>
+
+    <record model="res.groups" id="cec_base_docentes">
+      <field name="name">CEC docentes</field>
+      <field name="category_id" search="[('name','=','Sharing')]"></field>
+    </record>
+
+    <record model="res.groups" id="cec_base_estudiantes">
+      <field name="name">CEC Estudiantes</field>
+      <field name="category_id" search="[('name','=','Sharing')]"></field>
+    </record>
+
   </data>
 </openerp>

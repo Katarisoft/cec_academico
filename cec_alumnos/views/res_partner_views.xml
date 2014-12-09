@@ -13,7 +13,7 @@
 	      <field name="name" default_focus="1" placeholder="Name" on_change="on_name(name)"/>
 	    </h1>
 	    <field name="civil_status_id" placeholder="Estado Civil" widget="selection"/>
-	    
+	    <field name="is_alumn"/>
 	  </div>
 	  <group> 
 	    <group> 

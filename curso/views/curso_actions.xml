@@ -6,7 +6,7 @@
       <field name="name">Curso</field>
       <field name="res_model">course</field>
       <field name="view_type">form</field>
-      <field name="view_mode">tree,form</field>
+      <field name="view_mode">tree,form,calendar</field>
     </record>
     <!-- Ingreso de Unidades de aprendizaje en el sistema -->
     <record id="action_learning_unit" model="ir.actions.act_window">

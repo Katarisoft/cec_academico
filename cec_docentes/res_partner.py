@@ -55,9 +55,9 @@ class res_partner(osv.osv):
                 "is_teacher" : fields.boolean("Es Profesor?"),
 	}
 
-        _defaults = {
-                "is_teacher" : True
-        }
+#        _defaults = {
+#                "is_teacher" : True
+#        }
 
 	_sql_constraints = [('identification_number_unique', 'unique(identification_number)', _(u'Ya existe un registro con ese número de identificación.'))]
 	
