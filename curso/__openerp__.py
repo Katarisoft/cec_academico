@@ -33,9 +33,7 @@
         'views/curso_actions.xml',
         'views/curso_menus.xml',
         'report/certificado/certificado.xml',
-    ],
-    'update_xml': [
-
+        #'security/ir.model.access.csv'
     ],
     'depends': [
     ],
