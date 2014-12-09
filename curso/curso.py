@@ -157,16 +157,27 @@ class course_student(osv.osv):
             else:
                 res[cs.id] = False
         return res
-            
+
+    def _get_mark_ids(self, cr, uid, ids, field_name, arg, context=None):
+        res = {}
+        print ids
+        for mark in self.browse(cr, uid, ids, context=context):
+            print mark
+            partner_obj = self.pool.get('res.users').browse(cr,uid,uid)
+            res[mark.id] = self.pool.get('course.student.mark').search(cr,uid,[('partner_id','=',partner_obj.partner_id.id),('course_student_id','=',mark.id)])
+        print res
+        return res
+
     _columns = {
         'partner_id' : fields.many2one('res.partner', 'Alumno'),
         'course_id' : fields.many2one('course', 'Curso'),
         'mark' : fields.function(_mark,type="integer",store=True,string='Promedio General', size=3),
         'assistance' : fields.function(_assistance, type='integer',store=True,string='Asistencia', size=3),
         'approbate' : fields.function(_aprobate,type='boolean',store=True,string='Aprobado?',),
-        'course_student_mark_ids' : fields.one2many('course.student.mark','course_student_id','Notas x materi')
+        'course_student_mark_ids' : fields.one2many('course.student.mark','course_student_id','Notas x materi',),
+        #'course_student_mark_ids' : fields.function(_get_mark_ids, type="one2many", method=True,relation='course.student.mark',string='Notas x materia'),
     }
-
+    
     _sql_constraints = [
         ('course_id_unique_student', 'unique (partner_id,course_id)', 'El estudiante ya está inscrito en este curso !')
     ]
@@ -180,6 +191,7 @@ class course_student_mark(osv.osv):
         'learning_unit_id' : fields.many2one('learning.unit',"Materia"),
         'mark' : fields.integer("Nota",size=3),
         'assistance' : fields.integer('Asistencia',  size=3),
+        'partner_id' : fields.many2one('res.partner', 'Profesor'),
     }
 
 class course_student_inscription(osv.osv_memory):
@@ -192,7 +204,7 @@ class course_student_inscription(osv.osv_memory):
             course_student_ids = self.pool.get('course.student').search(cr,uid,[('course_id','=',inscription.course_id.id)])
             if course_student_ids:
                 if len(course_student_ids) == inscription.course_id.max_students:
-                    raise osv.except_osv(_('Warning!'), _('El cupo maximo del curso %s se ha completado') %(inscription.course_id.name))
+                    raise osv.except_osv(_('ADVERTENCIA!'), _('El cupo maximo del curso %s se ha completado') %(inscription.course_id.name))
 
             res = {'partner_id' : inscription.partner_id.id, 'course_id' : inscription.course_id.id,}
             course_student_id = self.pool.get('course.student').create(cr,uid,res)
@@ -201,13 +213,13 @@ class course_student_inscription(osv.osv_memory):
             if not inscription.course_id.course_docentes_ids:
                 self.pool.get('course').carga_unidades(cr,uid,[inscription.course_id.id])
             for course in inscription.course_id.course_docentes_ids:
-                res = {'course_student_id' : course_student_id, 'learning_unit_id' : course.learning_unit_id.id}
+                res = {'course_student_id' : course_student_id, 'learning_unit_id' : course.learning_unit_id.id, 'partner_id' : course.teacher.id}
                 self.pool.get('course.student.mark').create(cr,uid,res)
                 
         return True
             
 
     _columns = {
-        'partner_id' : fields.many2one('res.partner', 'Alumno'),
+        'partner_id' : fields.many2one('res.partner', string='Alumno'),
         'course_id' : fields.many2one('course', 'Curso'),
     }

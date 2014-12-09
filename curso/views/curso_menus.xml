@@ -9,5 +9,9 @@
     <menuitem action="action_learning_unit" id="menu_learning_unit" name="Unidades de aprendizaje" parent="menu_configuration" sequence="2"/>
     <menuitem action="action_course_student" id="menu_couser_student" name="Estudiantes" parent="menu_configuration" sequence="3"/>
     <menuitem action="action_course_student_inscription" id="menu_couser_student_inscription" name="Inscripción" parent="menu_configuration" sequence="4"/>
+
+    <record id="cec_base.menu_iaen" model="ir.ui.menu">
+      <field name="groups_id" eval="[(4,ref('cec_base.iaen_base_manager'))]"/>
+    </record>
   </data>
 </openerp>

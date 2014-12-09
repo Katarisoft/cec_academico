@@ -56,9 +56,9 @@ class res_partner(osv.osv):
                 
 	}
 
-        _defaults = {
-                "is_alumn" : True
-        }
+#        _defaults = {
+#                "is_alumn" : True
+#        }
 	_sql_constraints = [('identification_number_unique', 'unique(identification_number)', _(u'Ya existe un registro con ese número de identificación.'))]
 	
 	def on_name(self, cr, uid, ids, name):
