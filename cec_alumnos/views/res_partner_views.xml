@@ -1,58 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-  <data>
+    <data>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Partners" version="8.0">
+                    <sheet>
+                        <field name="image" widget="image" style="margin-left:30px" height="90" width="90"
+                               class="oe_left oe_avatar"
+                               options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Nombres y Apellidos"
+                                       on_change="on_name(name)"/>
+                            </h1>
+                            <!--<field name="civil_status_id" placeholder="Estado Civil" widget="selection"/>-->
+                            <field name="is_alumn"/>
+                        </div>
 
-    <record id="view_partner_form" model="ir.ui.view">
-      <field name="name">res.partner.form</field>
-      <field name="model">res.partner</field>
-      <field name="arch" type="xml">
-	<form string="Partners" version="8.0">
-	  <field name="image" widget="image" style="margin-left:30px" height="90" width="90" class="oe_left oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
-	  <div class="oe_title"> 
-	    <h1>
-	      <field name="name" default_focus="1" placeholder="Name" on_change="on_name(name)"/>
-	    </h1>
-	    <field name="civil_status_id" placeholder="Estado Civil" widget="selection"/>
-	    <field name="is_alumn"/>
-	  </div>
-	  <group> 
-	    <group> 
-	      <separator colspan="4"/>
-	      <field name="identification_type_id" widget="selection"/>
-	      <field name="identification_number"/>
-	      <field name="senescyt"/>
-	      <h3>
-		<label for="street" string="Dirección"/> 
-	      </h3>
-	      <div>
-		<field name="street" placeholder="Calle1..." required="1"/> 
-		<field name="street2" placeholder="Calle2..."/> 
-		<div class="address_format">
-		  <field name="birth_city_id" placeholder="Ciudad Nacimiento" invisible="1" widget="selection"/>
-		  <label for="birth_city" string="Ciudad/Estado/País"/>
-		  <field name="birth_city" placeholder="Ciudad de Nacimiento"/>
-		  <field name="residence_city_id" placeholder="Ciudad Residencia" on_change="city_change(residence_city_id)" widget="selection"/> 
-		  <field name="state_id" placeholder="Estado/Provincia" widget="selection" />
-		  <field name="country_id" placeholder="Pais" widget="selection" />
-		  <field name="zip" placeholder="Código postal"/> 
-		</div> 
-	      </div>
-	    </group>
-	    <group> 
-	      <separator colspan="4"/>
-	      <field name="phone" placeholder="e.g. +593-07-4082150" required="1"/>
-	      <field name="mobile" required="1" placeholder="e.g. +593-09-987116372"/>
-	      <field name="fax" placeholder="e.g. +593-07-4082150"/>
-	      <field name="email" widget="email" required="1" placeholder="usuario@dominio.org"/>
-	      <field name="blood_type_id" widget="selection"/>
-	      <field name="gender_id" widget="selection"/>
-	      <field name="nationality_id" widget="selection"/>
-	      <field name="disability" />
-	    </group>
-	  </group>
-      </form>
-    </field>
-  </record>
 
-</data>
+                        <group col="6" colspan="2">
+                            <field name="identification_type_id" widget="selection"/>
+                            <newline/>
+                            <field name="identification_number"/>
+                            <field name="senescyt"/>
+                            <h3>
+                                <label for="street" string="Dirección"/>
+                            </h3>
+                            <div>
+                                <field name="street" placeholder="Calle1..." required="1"/>
+                                <field name="street2" placeholder="Calle2..."/>
+                                <div class="address_format">
+                                    <!-- <field name="birth_city_id" placeholder="Ciudad Nacimiento" invisible="1" widget="selection"/>
+                                    <label for="birth_city" string="Ciudad/Estado/País"/>
+                                    <field name="birth_city" placeholder="Ciudad de Nacimiento"/>-->
+                                    <field name="residence_city_id" placeholder="Ciudad Residencia"
+                                           on_change="city_change(residence_city_id)" widget="selection"/>
+                                    <field name="state_id" placeholder="Estado/Provincia" widget="selection"/>
+                                    <field name="country_id" placeholder="Pais" widget="selection"/>
+                                    <!-- <field name="zip" placeholder="Código postal"/>-->
+                                </div>
+                            </div>
+                        </group>
+
+
+                        <group col="4" colspan="2">
+                            <separator colspan="4"/>
+                            <field name="phone" placeholder="e.g. +593-07-4082150" required="1"/>
+                            <field name="mobile" required="1" placeholder="e.g. +593-09-987116372"/>
+                            <field name="fax" placeholder="e.g. +593-07-4082150"/>
+                            <field name="email" widget="email" required="1" placeholder="usuario@dominio.org"/>
+                            <field name="gender_id" widget="selection"/>
+                            <field name="nationality_id" widget="selection"/>
+                            <field name="disability"/>
+                        </group>
+
+                        <group>
+                            <separator colspan="4"/>
+                            <field name="work_institution"/>
+                            <field name="charge"/>
+                            <field name="work_email"/>
+                            <field name="work_city" widget="selection"/>
+                            <field name="work_address"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
 </openerp>

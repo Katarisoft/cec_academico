@@ -16,6 +16,7 @@ access_event_type_manager,event_type,model_event_type,iaen_base_manager,1,1,1,1
 access_certified_type_manager,certified_type,model_certified_type,iaen_base_manager,1,1,1,1
 access_civil_status_manager,civil_status,model_civil_status,iaen_base_manager,1,1,1,1
 access_language_type_manager,language_type,model_language_type,iaen_base_manager,1,1,1,1
+access_res_partner_manager,res_partner,model_res_partner,iaen_base_manager,1,1,1,1
 ,,,,,,,
 ,,,,,,,
 access_identification_type_user,identification_type,model_identification_type,iaen_base_user,1,0,0,0

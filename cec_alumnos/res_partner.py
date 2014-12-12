@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
@@ -30,85 +30,82 @@ import xml.etree.ElementTree as ET
 from urllib2 import URLError
 import re
 
+
 class res_partner(osv.osv):
-	_inherit = "res.partner"
-	_columns = {
-		"Street2": fields.char(required=False),
-		"civil_status_id": fields.many2one("civil.status", "Estado Civil", required=True),
-		"gender_id": fields.many2one("gender", "Género", required=True),
-		"blood_type_id": fields.many2one("blood.type", "Tipo de Sangre", required=True),
-		"country_id": fields.many2one("res.country", "País de Nacimiento", required=False),
-		"birth_city": fields.char('Ciudad de Nacimiento', size=100),
-		"birth_city_id": fields.many2one("canton", "Ciudad de Nacimiento", required=False),
-		"residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
-		"state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
-		"identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
-		"identification_number": fields.char("Nmber", size=13, required=True,help="Cedula de Identidad, Pasaporte, CCI, DNI..."),
-		"nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
-		"house_number": fields.char("Número de Casa", size=7, required=False),
-		"location_reference": fields.text("Referencia de Ubicación"),
-		"disability": fields.boolean("Discapacidad"),
-		"disability_id": fields.many2one("type.disability", "Tipo de Discapacidad"), 
-		"disability_degree": fields.char("Grado de Discapacidad", size=150), 
-		"conadis_number": fields.char("N° Carnet del CONADIS", size=10, require=True),
-		"senescyt" : fields.char("Registro SENESCYT",help="En caso de tener títulos registrados ingrese el número de registro"),
-                "is_alumn" : fields.boolean("Es alumno?"),
-                
-	}
+    _inherit = "res.partner"
+    _columns = {
+    "identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
+    "identification_number": fields.char(u"Nro.", size=13, required=True,
+                                         help="Cedula de Identidad, Pasaporte, CCI, DNI"),
+    "gender_id": fields.many2one("gender", "Género", required=True),
+    "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
+    "state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
+    "nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
+    "Street2": fields.char(required=False),
+    "location_reference": fields.text("Referencia de Ubicación"),
+    "senescyt": fields.char("Registro SENESCYT",
+                            help="En caso de tener títulos registrados ingrese el número de registro"),
+    "work_institution": fields.char("Institución de trabajo", size=255),
+    "charge": fields.char("Cargo", size=200),
+    "work_email": fields.char("E-mail de trabajo", size=255),
+    "work_city": fields.many2one("canton", "Ciudad de Trabajo"),
+    "work_address": fields.char("Dirección del trabajo", size=255),
+    "disability": fields.boolean("Discapacidad"),
+    "disability_id": fields.many2one("type.disability", "Tipo de Discapacidad"),
+    "conadis_number": fields.char("N° Carnet del CONADIS", size=10, require=True),
 
-#        _defaults = {
-#                "is_alumn" : True
-#        }
-	_sql_constraints = [('identification_number_unique', 'unique(identification_number)', _(u'Ya existe un registro con ese número de identificación.'))]
-	
-	def on_name(self, cr, uid, ids, name):
-		if name:
-			print "%s_PA.pdf"%(name)
-			return {'value':{'proposal_file_name':"%s_PA.pdf"%(name.upper())}}
-		else:
-			return {'value': {}}
-	def on_city(self, cr, uid, ids, city):
-		if city:
-			values = {}
-			url = 'http://api.geonames.org/search?q=machala&maxRows=10&style=LONG&lang=es&username=_mfierro'
-			response = urllib2.urlopen(url).read()
+    "is_alumn": fields.boolean("Es alumno?"),
 
-			root = ET.fromstring(response)
-			for child in root:
-				if child.tag=='geoname' and child[5].text=='EC':
-					return child[6].text
+    }
 
-	def on_indi(self, cr, uid, ids, id_etnia):
-		if id_etnia:
-			obj = self.pool.get('ethnic.group').browse(cr,uid,id_etnia)
-			if obj.name.lower().find(u'indígena')>=0:
-				return {'value':{'use_indi':'i'}}
-			else:
-				return {'value':{'use_indi':'o', 'india_id': ''}}
-   
-	def only_numbers(self, cr, uid, ids):
-		""" Valida que una cadena contenga únicamente dígitos. """
-		for record in self.browse(cr, uid, ids):
-			if not re.match("^[0-9]+$", record.phone) or not re.match("^[0-9]+$", record.mobile): return False
-		return True
+    #        _defaults = {
+    #                "is_alumn" : True
+    #        }
+    _sql_constraints = [('identification_number_unique', 'unique(identification_number)',
+                         _(u'Ya existe un registro con ese número de identificación.'))]
 
-	def get_ids(self, cr, uid, ids, model, name):
-		domain = [('name','ilike',name)]
-		obj = self.pool.get(model).search(cr, uid, domain)
-		#pdb.set_trace()
+    def on_name(self, cr, uid, ids, name):
+        if name:
+            print "%s_PA.pdf" % (name)
+            return {'value': {'proposal_file_name': "%s_PA.pdf" % (name.upper())}}
+        else:
+            return {'value': {}}
 
-		try:
-			return obj[0]
-		except IndexError:
-			return None
-	
-	def city_change(self, cr, uid, ids, city, context=None):
-			value = {}
-			value['residence_city_id'] = city
-			if city:
-					city_obj = self.pool.get('canton').browse(cr, uid, city)
-					if city_obj:
-							value['state_id'] = city_obj.country_state_id.id
-							value['country_id'] = city_obj.country_state_id.country_id.id
-			return {'value':value}
-	#_constraints = [(only_numbers, u'Los números telefónicos deben contener únicamente dígitos.', ['phone','mobile'])]
+    def on_city(self, cr, uid, ids, city):
+        if city:
+            values = {}
+            url = 'http://api.geonames.org/search?q=machala&maxRows=10&style=LONG&lang=es&username=_mfierro'
+            response = urllib2.urlopen(url).read()
+
+            root = ET.fromstring(response)
+            for child in root:
+                if child.tag == 'geoname' and child[5].text == 'EC':
+                    return child[6].text
+
+    def on_indi(self, cr, uid, ids, id_etnia):
+        if id_etnia:
+            obj = self.pool.get('ethnic.group').browse(cr, uid, id_etnia)
+            if obj.name.lower().find(u'indígena') >= 0:
+                return {'value': {'use_indi': 'i'}}
+            else:
+                return {'value': {'use_indi': 'o', 'india_id': ''}}
+
+    def only_numbers(self, cr, uid, ids):
+        """ Valida que una cadena contenga únicamente dígitos. """
+        for record in self.browse(cr, uid, ids):
+            if not re.match("^[0-9]+$", record.phone) or not re.match("^[0-9]+$", record.mobile): return False
+        return True
+
+    def get_ids(self, cr, uid, ids, model, name):
+        domain = [('name', 'ilike', name)]
+        obj = self.pool.get(model).search(cr, uid, domain)
+        #pdb.set_trace()
+
+        try:
+            return obj[0]
+        except IndexError:
+            return None
+
+
+
+    #_constraints = [(only_numbers, u'Los números telefónicos deben contener únicamente dígitos.', ['phone','mobile'])]

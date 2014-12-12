@@ -29,9 +29,9 @@
     """,
     'website': 'http://www.iaen.edu.ec',
     'data': [
-        'views/iaen_base_views.xml',
-        'views/iaen_base_actions.xml',
-        'views/iaen_base_menus.xml',
+        'views/cec_base_views.xml',
+        'views/cec_base_actions.xml',
+        'views/cec_base_menus.xml',
         'data/ethnic_group_data.xml',
         'data/identification_type_data.xml',
         'data/civil_status_data.xml',
@@ -50,12 +50,11 @@
         'data/instruction_data.xml',
         'data/language_data.xml',
         'data/certified_type_data.xml',
-    ],
-    'update_xml': [
+
         'data/users_data.xml',
         'security/ir.model.access.csv'
     ],
-    'images' : ['images/iaen_base.jpeg'],
+    #'images' : ['images/iaen_base.jpeg'],
     'installable': True,
     'auto_install': False,
 }
