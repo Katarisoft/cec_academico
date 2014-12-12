@@ -37,7 +37,7 @@
                                        on_change="on_name(name)"/>
                             </h1>
                         </div>
-                        <group col="4" colspan="2">
+                        <group col="4" colspan="3">
                             <field name="identification_type_id" nolabel="0"/>
                             <newline/>
                             <field name="identification_number"/>
@@ -46,7 +46,11 @@
                             <newline/>
                             <field name="nationality_id"/>
                             <newline/>
-                            <group col="4" colspan="2">
+                            <group col="4" colspan="3">
+                                <label for="phone" string="Telf. Domicilio"/>
+                                <field name="phone" nolabel="1"/>
+                                <label for="mobile" string="Movil"/>
+                                <field name="mobile" nolabel="1"/>
                                 <label for="street" string="Dirección"/>
                                 <field name="street" placeholder="Calle Principal..." required="1" nolabel="1"/>
                                 <newline/>
@@ -68,13 +72,17 @@
                             <newline/>
                             <field name="conadis_number"
                                    attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}"/>
+                            <newline/>
                             <group col="4" colspan="2">
                                 <field name="work_institution"/>
+                                <newline/>
                                 <field name="charge"/>
-                                <field name="work_email"/>
+                                <newline/>
+                                <field name="work_email"  widget="email" placeholder="usuario@dominio.org"/>
+                                <newline/>
                                 <field name="work_city"/>
+                                <newline/>
                                 <field name="work_address"/>
-                                <field name="is_alumn"/>
                             </group>
                         </group>
                     </sheet>

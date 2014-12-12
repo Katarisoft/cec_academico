@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # #############################################################################
 #
-#    OpenERP, Open Source Management Solution
+# OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -35,13 +35,17 @@ class res_partner(osv.osv):
     _inherit = "res.partner"
     _columns = {
 
-    "senescyt": fields.char("Registro SENESCYT",
-                            help="En caso de tener títulos registrados ingrese el número de registro"),
-    "work_institution": fields.char("Institución de trabajo", size=255),
-    "charge": fields.char("Cargo", size=200),
-    "work_email": fields.char("E-mail de trabajo", size=255),
-    "work_city": fields.many2one("canton", "Ciudad de Trabajo"),
-    "work_address": fields.char("Dirección del trabajo", size=255),
-    "is_alumn": fields.boolean("Es alumno?"),
+        "senescyt": fields.char("Registro SENESCYT",
+                                help="En caso de tener títulos registrados ingrese el número de registro"),
+        "work_institution": fields.char("Institución de trabajo", size=255),
+        "charge": fields.char("Cargo", size=200),
+        "work_email": fields.char("E-mail de trabajo", size=255),
+        "work_city": fields.many2one("canton", "Ciudad de Trabajo"),
+        "work_address": fields.char("Dirección del trabajo", size=255),
+        "is_alumn": fields.boolean("Es alumno?"),
 
+
+    }
+    _defaults = {
+        "is_alumn": True
     }
