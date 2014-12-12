@@ -43,7 +43,7 @@ class res_partner(osv.osv):
 		"residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
 		"state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
 		"identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
-		"identification_number": fields.char("Número de Identificación", size=13, required=True,help="Cedula de Identidad, Pasaporte, CCI, DNI"),
+		"identification_number": fields.char("Nmber", size=13, required=True,help="Cedula de Identidad, Pasaporte, CCI, DNI..."),
 		"nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
 		"house_number": fields.char("Número de Casa", size=7, required=False),
 		"location_reference": fields.text("Referencia de Ubicación"),
