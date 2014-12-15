@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # #############################################################################
 #
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+# OpenERP, Open Source Management Solution
+# Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -139,7 +139,7 @@ class blood_type(osv.osv):
     _name = "blood.type"
     _description = "Registra los tipos de sangre"
     _columns = {
-    'name': fields.char("Nombre", size=3, required=True),
+        'name': fields.char("Nombre", size=3, required=True),
     }
     _order = "name"
     _sql_constraints = [('name_unique', 'unique(name)', _(u'Ya existe un Tipo de Sangre con ese nombre.'))]
@@ -179,7 +179,7 @@ class family_relationship(osv.osv):
             if re.search("[^a-z, A-Z]", bloody_type.name): return False
         return True
 
-    #    _constraints = [(_alphabetical, _(u"El Tipo de dato es invalido."), ['name'])]
+        #    _constraints = [(_alphabetical, _(u"El Tipo de dato es invalido."), ['name'])]
 
 
 class nationality(osv.osv):
@@ -187,7 +187,7 @@ class nationality(osv.osv):
     _name = "nationality"
     _description = "Registra las nacionalidades"
     _columns = {
-    'name': fields.char("Nombre", size=45, required=True),
+        'name': fields.char("Nombre", size=45, required=True),
     }
     _order = "name"
     _sql_constraints = [('name_unique', 'unique(name)', _(u'Ya existe una Nacionalidad con ese nombre.'))]
@@ -206,8 +206,8 @@ class instruction(osv.osv):
     _name = "instruction"
     _description = "Registra las instrucciones"
     _columns = {
-    'name': fields.char("Nombre", size=200, required=True),
-    'description': fields.text("Descripción"),
+        'name': fields.char("Nombre", size=200, required=True),
+        'description': fields.text("Descripción"),
     }
     _order = "name"
     _sql_constraints = [('name_unique', 'unique(name)', _(u'Ya existe una Instrucción con ese nombre.'))]
@@ -322,24 +322,25 @@ class language_type(osv.osv):
         "name": fields.char("Nombre", size=30, required=True),
     }
 
+
 #DATOS DE USUARIO DEL SISTEMA
 class res_partner(osv.osv):
     _inherit = "res.partner"
     _columns = {
-    "identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
-    "identification_number": fields.char(u"Número de Identificación", size=13, required=True,
-                                         help="Cedula de Identidad, Pasaporte, CCI, DNI"),
-    "gender_id": fields.many2one("gender", "Género", required=True),
-    "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
-    "state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
-    "nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
-    "street2": fields.char("Calle Secundaria", required=False),
-    "location_reference": fields.text("Referencia de Ubicación"),
-    "disability": fields.boolean("Discapacidad"),
-    "disability_id": fields.many2one("type.disability", "Tipo de Discapacidad"),
-    "conadis_number": fields.char("N° Carnet del CONADIS", size=10, require=True),
+        "identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
+        "identification_number": fields.char(u"Número de Identificación", size=13, required=True,
+                                             help="Cedula de Identidad, Pasaporte, CCI, DNI"),
+        "gender_id": fields.many2one("gender", "Género", required=True),
+        "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
+        "state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
+        "nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
+        "street2": fields.char("Calle Secundaria", required=False),
+        "location_reference": fields.text("Referencia de Ubicación"),
+        "disability": fields.boolean("Discapacidad"),
+        "disability_id": fields.many2one("type.disability", "Tipo de Discapacidad"),
+        "conadis_number": fields.char("N° Carnet del CONADIS", size=10, require=True),
 
-    #"is_alumn": fields.boolean("Es alumno?"),
+        #"is_alumn": fields.boolean("Es alumno?"),
 
     }
     _sql_constraints = [('identification_number_unique', 'unique(identification_number)',

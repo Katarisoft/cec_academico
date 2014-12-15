@@ -5,12 +5,12 @@
         <menuitem id="menu_cec" name="CEC BASE"/>
         <menuitem id="menu_configuration" name="Configuración" parent="menu_cec"/>
 
-        <menuitem action="action_res_partner_cec" id="menu_identification_type" name="Registro Usuario"
+        <menuitem action="action_res_partner_cec" id="menu_res_partner_cec" name="Registro Usuario"
                   parent="menu_configuration" sequence="1"/>
 
         <menuitem action="action_identification_type" id="menu_identification_type" name="Tipo de Identificación"
                   parent="menu_configuration" sequence="2"/>
-<!--        <menuitem action="action_civil_status" id="menu_civil_status" name="Estado Civil" parent="menu_configuration"
+        <menuitem action="action_civil_status" id="menu_civil_status" name="Estado Civil" parent="menu_configuration"
                   sequence="3"/>
         <menuitem action="action_ethnic_group" id="menu_ethnic_group" name="Grupo Étnico" parent="menu_configuration"/>
         <menuitem action="action_gender" id="menu_gender" name="Identidad de Genero" parent="menu_configuration"
@@ -36,9 +36,9 @@
                   parent="menu_configuration" sequence="6"/>
         <menuitem action="action_instruction" id="menu_ingreso_instruction" name="Instrucción"
                   parent="menu_configuration" sequence="7"/>
--->
+
         <!-- Menu Información Financiera -->
-        <!--
+
         <menuitem id="menu_financiera" name="Información Financiera" parent="menu_configuration"/>
         <menuitem action="action_entity_finance" id="menu_entity_finance" name="Entidad Financiera"
                   parent="menu_financiera"/>
@@ -49,9 +49,6 @@
         <menuitem action="action_certified_type" id="menu_certified_type" name="Tipo de Certificado"
                   parent="menu_configuration"/>
         <menuitem action="action_jobs_type" id="menu_jobs_type" name="Puestos de Trabajo" parent="menu_configuration"/>
-
--->
-
 
     </data>
 </openerp>

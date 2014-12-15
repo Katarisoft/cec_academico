@@ -28,11 +28,11 @@
     'description' : """
     Registro de estudiantes par cursos del CEC
     """,
-    'website': 'http://www.iaen.edu.ec',
+    'website': 'http://www.cecep-iaen.edu.ec',
     'data': [
-        'views/res_partner_views.xml',
-        'views/res_partner_actions.xml',
-        'views/res_partner_menus.xml',
+        'views/cec_alumnos_views.xml',
+        'views/cec_alumnos_actions.xml',
+        'views/cec_alumnos_menus.xml',
 	],
     'update_xml': [
         #'security/ir.model.access.csv',
