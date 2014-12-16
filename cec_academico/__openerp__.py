@@ -19,41 +19,28 @@
 #
 ##############################################################################
 {
-    'name' : 'CEC base',
-    'version' : '1.0',
-    'author' : 'ECE EP',
-    'category' : 'configuracion',
-    'description' : """
-    Ingreso de todas los parametros que son necesarios
-    para la creación de Registro de docentes y estudiantes.
+    'name': 'CEC académico',
+    'version': '1.0',
+    'author': 'CEC-EP',
+    'category': 'Académico',
+    'description':  """
+    Creación de cursos y registro de usuarios para el sistema académico
     """,
     'website': 'http://www.cecep-iaen.edu.ec',
     'data': [
-        'views/cec_base_views.xml',
-        'views/cec_base_actions.xml',
-        'views/cec_base_menus.xml',
-        'data/ethnic_group_data.xml',
-        'data/identification_type_data.xml',
-        'data/civil_status_data.xml',
-        'data/gender_data.xml',
-        'data/family_relationship_data.xml',
-        'data/type_disability.xml',
-        'data/blood_type_data.xml',
-        'data/bank_account_type_data.xml',
-        'data/entity_finance_data.xml',
-        'data/nationality_data.xml',
-        'data/zones_data.xml',
-        'data/res_country_state_data.xml',
-        'data/canton_data.xml',
-        'data/parish_data.xml',
-        'data/event_type_data.xml',
-        'data/instruction_data.xml',
-        'data/language_data.xml',
-        'data/certified_type_data.xml',
-        'data/users_data.xml',
-        'security/ir.model.access.csv'
+        'views/cec_academico_views.xml',
+        'views/cec_academico_actions.xml',
+        'views/cec_academico_menus.xml',
+        'views/cec_alumnos_views.xml',
+        'views/cec_docentes_views.xml',
+        'report/certificado/certificado.xml',
+        #'security/ir.model.access.csv'
     ],
-    #'images' : ['images/iaen_base.jpeg'],
+    'depends': [
+        'cec_base',
+        'base',
+    ],
+    'images' : [],
     'installable': True,
     'auto_install': False,
 }
