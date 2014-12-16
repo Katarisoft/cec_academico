@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!-- Partner Kanban View -->
+    <record model="ir.ui.view" id="cec_alumnos_kanban_view">
+      <field name="name">cec.alumnos.kanban</field>
+      <field name="model">cec.alumnos</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <field name="color"/>
+          <field name="display_name"/>
+          <field name="title"/>
+          <field name="email"/>
+          <field name="parent_id"/>
+          <field name="is_company"/>
+          <field name="function"/>
+          <field name="phone"/>
+          <field name="street"/>
+          <field name="street2"/>
+          <field name="zip"/>
+          <field name="city"/>
+          <field name="country_id"/>
+          <field name="mobile"/>
+          <field name="state_id"/>
+          <field name="category_id"/>
+          <field name="has_image"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_vignette oe_semantic_html_override">
+                <a type="open">
+                  <t t-if="record.has_image.raw_value === true">
+                    <img t-att-src="kanban_image('cec.alumnos', 'image_small', record.id.value)" class="oe_kanban_image"/>
+                  </t>
+                  <t t-if="record.has_image.raw_value === false">
+                    <t t-if="record.is_company.raw_value === true">
+                      <img t-att-src='_s + "/base/static/src/img/company_image.png"' class="oe_kanban_image"/>
+                    </t>
+                    <t t-if="record.is_company.raw_value === false">
+                      <img t-att-src='_s + "/base/static/src/img/avatar.png"' class="oe_kanban_image"/>
+                    </t>
+                  </t>
+                </a>
+                <div class="oe_kanban_details">
+                  <h4 class="oe_partner_heading"><a type="open"><field name="display_name"/></a></h4>
+                  <div class="oe_kanban_partner_categories"/>
+                  <div class="oe_kanban_partner_links"/>
+                  <ul>
+                    <li t-if="record.parent_id.raw_value and !record.function.raw_value"><field name="parent_id"/></li>
+                    <li t-if="!record.parent_id.raw_value and record.function.raw_value"><field name="function"/></li>
+                    <li t-if="record.parent_id.raw_value and record.function.raw_value"><field name="function"/> at <field name="parent_id"/></li>
+                    <li t-if="record.city.raw_value and !record.country_id.raw_value"><field name="city"/></li>
+                    <li t-if="!record.city.raw_value and record.country_id.raw_value"><field name="country_id"/></li>
+                    <li t-if="record.city.raw_value and record.country_id.raw_value"><field name="city"/>, <field name="country_id"/></li>
+                    <li t-if="record.email.raw_value"><a t-attf-href="mailto:#{record.email.raw_value}"><field name="email"/></a></li>
+                  </ul>
+                </div>
+              </div>
+
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    <!-- Registro usuarios -->
+    <record id="view_cec_alumnos_tree" model="ir.ui.view">
+      <field name="name">view.cec.alumnos.tree</field>
+      <field name="model">cec.alumnos</field>
+      <field name="arch" type="xml">
+        <tree string="Registro de usuario">
+          <field name="identification_type_id"/>
+          <field name="identification_number"/>
+          <field name="gender_id"/>
+          <field name="residence_city_id"/>
+          <field name="state_id"/>
+          <field name="nationality_id"/>
+          <field name="street2"/>
+          <field name="location_reference"/>
+          <field name="disability"/>
+          <field name="disability_id"/>
+          <field name="conadis_number"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_cec_alumnos_form" model="ir.ui.view">
+      <field name="name">view.cec.alumnos.form</field>
+      <field name="model">cec.alumnos</field>
+      <field name="arch" type="xml">
+        <form string="Registro de usuario" version="8.0">
+          <sheet>
+            <field name="image" widget="image" style="margin-left:30px" height="90" width="90"
+                   class="oe_left oe_avatar"
+                   options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+            <div class="oe_title">
+              <h1>
+                <field name="name" default_focus="1" placeholder="Nombres y Apellidos"/>
+                <field name="email" placeholder="Correo Personal"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <separator colspan="4" string="Información"/>
+                <field name="identification_type_id" widget="selection"/>
+                <field name="identification_number"/>
+                <field name="etnia" widget="selection"/>
+                <field name="gender_id" widget="selection"/>
+                <field name="nationality_id" widget="selection"/>
+                <field name="disability"/>
+                <newline/>
+                <field name="disability_id"
+                       attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}" widget="selection"/>
+                <newline/>
+                <field name="conadis_number"
+                       attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}"/>
+              <newline/>
+              </group>
+              <group>
+                <separator colspan="4" string="Dirección"/>
+                <!--<field name="phone" />
+                <label for="mobile" string="Movil"/>
+                <field name="mobile" nolabel="1"/>-->
+                <label for="street" string="Dirección"/>
+                <field name="street" placeholder="Calle Principal..." required="1" nolabel="1"/>
+                <newline/>
+                <field name="street2" placeholder="Calle Secundaria..."/>
+                <newline/>
+                <field name="residence_city_id" on_change="city_change(residence_city_id)"
+                       />
+                <newline/>
+                <field name="state_id" widget="selection"/>
+                <newline/>
+                <field name="location_reference" placeholder="Describa con mas detalle la ubicación de su domicilio"/>
+                <newline/>
+              </group>
+              <newline/>
+              <group col="4" colspan="2">
+                <separator colspan="4" string="Información Trabajo"/>
+                <newline/>
+                <field name="work_institution"/>
+                <field name="charge"/>
+                <field name="work_email"  widget="email" placeholder="usuario@tuempresa.com"/>
+                <field name="work_city"/>
+                <field name="work_address"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+
+  </data>
+</openerp>

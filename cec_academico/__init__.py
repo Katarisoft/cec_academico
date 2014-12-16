@@ -19,6 +19,7 @@
 #
 ##############################################################################
 
-import cec_base
-import partner
+import cec_academico
+import cec_alumnos
+import cec_docentes
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -28,7 +28,6 @@ import openerp.addons.decimal_precision as dp
 import openerp.tools.image as imageoerp
 import re
 
-
 class identification_type(osv.osv):
     _name = "identification.type"
     _description = u'Identificacion con pasaporte o Cédula de ciudadania'
@@ -38,7 +37,6 @@ class identification_type(osv.osv):
         "name": fields.char("Nombre", size=100, required=True),
         "description": fields.text("Descripción"),
     }
-
 
 class ethnic_group(osv.osv):
     _name = "ethnic.group"
@@ -322,43 +320,11 @@ class language_type(osv.osv):
         "name": fields.char("Nombre", size=30, required=True),
     }
 
-
-#DATOS DE USUARIO DEL SISTEMA
-class res_partner(osv.osv):
-    _inherit = "res.partner"
+class tematica_type(osv.osv):
+    _name = "tematica.type"
+    _description = 'Tematica en la que participa'
+    _order = "name"
+    _sql_constraints = [('name_unique', 'unique(name)', _(u'Ya existe un tipo de identificación con el mismo nombre'))]
     _columns = {
-        "identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
-        "identification_number": fields.char(u"Número de Identificación", size=13, required=True,
-                                             help="Cedula de Identidad, Pasaporte, CCI, DNI"),
-        "gender_id": fields.many2one("gender", "Género", required=True),
-        "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
-        "state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
-        "nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
-        "street2": fields.char("Calle Secundaria", required=False),
-        "location_reference": fields.text("Referencia de Ubicación"),
-        "disability": fields.boolean("Discapacidad"),
-        "disability_id": fields.many2one("type.disability", "Tipo de Discapacidad"),
-        "conadis_number": fields.char("N° Carnet del CONADIS", size=10, require=True),
-
-        #"is_alumn": fields.boolean("Es alumno?"),
-
+        "name": fields.char("Nombre", size=100, required=True),
     }
-    _sql_constraints = [('identification_number_unique', 'unique(identification_number)',
-                         _(u'Ya existe un registro con ese número de identificación.'))]
-
-    def city_change(self, cr, uid, ids, city, context=None):
-        value = {}
-        value['residence_city_id'] = city
-        if city:
-            city_obj = self.pool.get('canton').browse(cr, uid, city)
-            if city_obj:
-                value['state_id'] = city_obj.country_state_id.id
-                value['country_id'] = city_obj.country_state_id.country_id.id
-        return {'value': value}
-
-    def on_name(self, cr, uid, ids, name):
-        if name:
-            print "%s_PA.pdf" % (name)
-            return {'value': {'proposal_file_name': "%s_PA.pdf" % (name.upper())}}
-        else:
-            return {'value': {}}
