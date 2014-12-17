@@ -20,66 +20,27 @@
 ##############################################################################
 from datetime import datetime, timedelta
 import random
-from urllib import urlencode
 from urlparse import urljoin
+import werkzeug
 
+from openerp.addons.base.ir.ir_mail_server import MailDeliveryException
 from openerp.osv import osv, fields
-from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT, ustr
 from ast import literal_eval
 from openerp.tools.translate import _
 
 class SignupError(Exception):
     pass
 
-def now(**kwargs):
-    dt = datetime.now() + timedelta(**kwargs)
-    return dt.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-
 class res_users(osv.Model):
     _inherit = 'res.users'
 
-    def action_send_mail(self, cr, uid, login, token, context=None):
-        #res_users_obj = self.pool.get('res.users').search(cr, uid, [('login','=',login['login'])])
-        res_partner_ids = self.pool.get('res.partner').search(cr,uid,[('email','=',login['email'])])
-        if res_partner_ids:
-            res_users_obj = self.pool.get('res.users').search(cr, uid, [('partner_id','=',res_partner_ids[0])])
-            print res_users_obj
-        res_partner = self.pool.get('res.partner')
-        partner_ids = [user.partner_id.id for user in self.browse(cr, uid, res_users_obj, context)]
-        res_partner.signup_prepare(cr, uid, partner_ids, signup_type="signup", expiration=now(days=+1), context=context)
-        ids = res_users_obj
-        if not context:
-            context = {}
 
-        # send email to users with their signup url
-        self.write(cr,uid,ids,{
-            'active':False
-        })
-        template = False
-        template = self.pool.get('ir.model.data').get_object(cr, uid, 'auth_signup_iaen', 'set_password_email_iaen')
-        mail_obj = self.pool.get('mail.mail')
-        assert template._name == 'email.template'
-        for user in self.browse(cr, uid, ids, context):
-            if not user.email:
-                raise osv.except_osv(_("No se puede enviar el correo, la cuenta de usuario y/o cotraseña no es correcta."), user.name)
-            mail_id = self.pool.get('email.template').send_mail(cr, uid, template.id, user.id, True, context=context)
-            mail_state = mail_obj.read(cr, uid, mail_id, ['state'], context=context)
-            if mail_state and mail_state['state'] == 'exception':
-                raise osv.except_osv(_("Cannot send email: no outgoing email server configured.\nYou can configure it under Settings/General Settings."), user.name)
-            else:
-                return True
+    def signup(self, cr, uid, values, token=None, context=None):
+        print context
+        if token:
+            return response = super(res_users, self).signup(cr,uid,values,token,context)
+        else:
+            self.pool.get('cec.alumnos').create(cr, uid,{'name' : values.get('name'), 'email' : values.get('login'), 'password' : values.get('password')} )
+        return (cr.dbname, values.get('login'), values.get('password'))
 
-
-    def active_user(self, cr, uid, token, context=None):
-        partner_id = self.pool.get('res.partner').search(cr, uid, [('signup_token', '=', token)])
-        if partner_id:
-            #partner_obj = self.pool.get('res.partner').browse(cr, uid, partner_id)
-            user_id = self.search(cr, uid, [('partner_id.id', 'in', partner_id),('active','=',False)])
-            self.pool.get('res.partner').write(cr,uid,partner_id, {'user_id': user_id[0]})
-            if user_id:
-                self.write(cr, uid, user_id, {'active': True})
-                partner_obj = self.pool.get('res.partner')
-                partner_obj.write(cr,uid,partner_id,{'signup_token': False, 'signup_type': False, 'signup_expiration': False})
-                return True
-            else:
-                return False

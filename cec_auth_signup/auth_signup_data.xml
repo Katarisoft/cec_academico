@@ -1,50 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-  <data noupdate="1">
+    <data noupdate="1">
 
-    <!-- Email template for new users -->
-    <record id="email_confirmation_cec" model="email.template">
-      <field name="name">CEC creación de usuarios</field>
-      <field name="model_id" ref="base.model_res_users"/>
-      <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
-      <field name="email_to">${object.email|safe}</field>
-      <field name="subject"><![CDATA[${object.company_id.name} Confirmar creación de usuario sistema académico CEC]]></field>
-      <field name="body_html">
-        <![CDATA[
-                 <p>
-                 ${object.name},
-                 </p>
-                 <p>
-                 Ha creado una cuenta para el sistema académico en "${object.company_id.name}" para hacer uso e ingresar datos dentro del sistema.
-                 </p>
-                 <p>
-                 Para confirmar el registro, haz click en el siguiente enlace:
-                 </p>
-                 <ul>
-                 <li><a href="${object.signup_url}"> Confirmar registro para: "${object.company_id.name}"</a></li>
-                 </ul>
-                 <p>
-                 Use los siguientes datos para confirmar su registro
-                 usuario ${object.login}
-                 </p><p>
-                 clave ${object.password}
-                 </p>
-                 <p>
-                 O si crees que es un error, no hacer caso a este mail.
-                 </p>
-                 <p>
-                 Gracias,
-                 </p>
-                 <pre>
-                 --
 
-                 ${object.company_id.name or ''}
-                 ${object.company_id.email or ''}
-                 ${object.company_id.phone or ''}
-                 </pre>
-        ]]>
-      </field>
-    </record>
+        <!-- Email template for reset password -->
+        <record id="reset_password_email" model="email.template">
+            <field name="name">Reset Password</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject">Reinicio de Clave</field>
+            <field name="body_html"><![CDATA[
+            <p>Se ha solicitado un cambio de clave para su cuenta en el sistema académico ${object.company_id.name} enlazado a este correo.</p>
+            
+            <p>Usted puede cambiar su clave haciendo click en el siguiente <a href="${object.signup_url}">enlace</a>.</p>
+            
+            <p>Nota: Si ud no ha generado la petición de cambio de clave, ignorar este mensaje.</p>]]></field>
+        </record>
+        
+        <!-- Email template for new users -->
+        <record id="set_password_email" model="email.template">
+            <field name="name">Odoo Enterprise Connection</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject"><![CDATA[${object.company_id.name} creación de usuario sistema academico]]></field>
+            <field name="body_html">
+                <![CDATA[
+                    <p>
+                        Estimado ${object.name},
+                    </p>
+                    <p>
+                        Usted ha cerado una cuenta en el sistema académico de "${object.company_id.name}" para acceder a tus notas e incribirte en cursos.
+                    </p>
+                    <p>
+                        Thanks,
+                    </p>
+                    <pre>
+                    --
+                    ${object.company_id.name or ''}
+                    ${object.company_id.email or ''}
+                    ${object.company_id.phone or ''}
+                    </pre>
+                ]]>
+            </field>
+        </record>
 
-  </data>
+        <!-- Email template for new users -->
+        <record id="invitation_mail" model="email.template">
+            <field name="name">CEC academic Connection</field>
+            <field name="model_id" ref="base.model_res_users"/>
+            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="subject"><![CDATA[Creación de usuario sistema academico ${object.company_id.name}]]></field>
+            <field name="body_html">
+                <![CDATA[
+                    <p>
+                        Estimado ${object.name},
+                    </p>
+                    <p>
+                        Se ha creado una cuenta en el sistema académico de "${object.company_id.name}" para acceder a tus notas e incribirte en cursos.
+                    </p>
+                    <p>
+                      Para acceder al sistema haga click en el siguiente <a href="http://academico.cecep-iaen.edu.ec">enlace</a>
+                    </p>
+                    <p>
+                        Thanks,
+                    </p>
+                    <pre>
+                    --
+                    ${object.company_id.name or ''}
+                    ${object.company_id.email or ''}
+                    ${object.company_id.phone or ''}
+                    </pre>
+                ]]>
+            </field>
+        </record>
+
+    </data>
 </openerp>

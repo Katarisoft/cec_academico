@@ -20,25 +20,27 @@
 ##############################################################################
 
 {
-    'name': 'Reg_CEC_academico',
+    'name': ' CEC EP Signup',
     'description': """
-       Sistema de registro de estudiantes y docentes para administración académica
+Allow users to sign up and reset their password
+===============================================
     """,
-    'author': 'CECEP',
+    'author': 'CEC EP',
     'version': '1.0',
     'category': 'Authentication',
-    'website': 'http://www.cecep-iaen.edu.ec',
+    'website': 'https://www.cecep-iaen.edu.ec',
     'installable': True,
     'auto_install': True,
     'depends': [
-        'auth_signup',
+        'base_setup',
+        'email_template',
+        'web',
     ],
     'data': [
-        'auth_signup_data.xml',
-        'data/server_correo_data.xml',
+        #'auth_signup_data.xml',
+        #'res_config.xml',
         #'res_users_view.xml',
+        #'views/auth_signup_login.xml',
     ],
-    'js': ['static/src/js/auth_signup.js'],
-    'qweb': ['static/src/xml/auth_signup.xml'],
     'bootstrap': True,
 }
