@@ -65,6 +65,12 @@
                       Para acceder al sistema haga click en el siguiente <a href="http://academico.cecep-iaen.edu.ec">enlace</a>
                     </p>
                     <p>
+                        Sus credenciales son:<br>
+                        usuario: ${object.email or 'correo'}<br>
+                        clave: ${object.identification_number or 'CI/PASS'}
+                    </p>
+
+                    <p>
                         Thanks,
                     </p>
                     <pre>
