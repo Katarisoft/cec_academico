@@ -49,6 +49,7 @@ class cec_alumnos(osv.osv):
     }
     
     def create(self, cr, uid, vals, context=None):
+        print context
         res = {}
         res_id = super(cec_alumnos, self).create(cr, uid, vals, context=context)
         cecalumnos_obj = self.browse(cr,uid,res_id)
@@ -57,10 +58,11 @@ class cec_alumnos(osv.osv):
                'password' : vals['identification_number'],
                #'company_id' : vals['company'],
                'partner_id' : cecalumnos_obj.partner_id.id,
-           }
+        }
         usr_id = self.pool.get('res.users').create(cr, uid, res)
 
         return cecalumnos_obj.id
+
     def city_change(self, cr, uid, ids, city, context=None):
         value = {}
         value['residence_city_id'] = city
