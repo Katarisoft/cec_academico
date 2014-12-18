@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-#import controllers
+import controllers
 #import res_config
-import res_users
+#$import res_users
 #import cec_alumnos
