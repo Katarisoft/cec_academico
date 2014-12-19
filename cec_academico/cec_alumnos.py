@@ -2,7 +2,7 @@
 # #############################################################################
 #
 # OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+# Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -31,16 +31,19 @@ from urllib2 import URLError
 import re
 import random
 
+
 def random_password():
     # the token has an entropy of about 120 bits (6 bits/char * 20 chars)                                                                                                                                          
     chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     return ''.join(random.choice(chars) for i in xrange(8))
 
+
 class cec_alumnos(osv.osv):
     _name = "cec.alumnos"
-    _inherits = {'res.partner':'partner_id'}
+    _inherits = {'res.partner': 'partner_id'}
     _columns = {
-        "senescyt": fields.char("Registro SENESCYT", help="En caso de tener títulos registrados ingrese el número de registro"),
+        "senescyt": fields.char("Registro SENESCYT",
+                                help="En caso de tener títulos registrados ingrese el número de registro"),
         "work_institution": fields.char("Institución de trabajo", size=255),
         "charge": fields.char("Cargo", size=200),
         "work_email": fields.char("E-mail de trabajo", size=255),
@@ -52,22 +55,22 @@ class cec_alumnos(osv.osv):
     _defaults = {
         "is_alumn": True
     }
-    
+
     def create(self, cr, uid, vals, context=None):
         res = {}
         res_id = super(cec_alumnos, self).create(cr, uid, vals, context=context)
-        cecalumnos_obj = self.browse(cr,uid,res_id)
+        cecalumnos_obj = self.browse(cr, uid, res_id)
         if not 'password' in context:
             vals['password'] = random_password()
-         else:
+        else:
             vals['password'] = context['password']
-            
-        res = {'active' : True,
-               'login' : vals['email'],
-               'password' : vals['password'],
+
+        res = {'active': True,
+               'login': vals['email'],
+               'password': vals['password'],
                #'company_id' : vals['company'],
-               'partner_id' : cecalumnos_obj.partner_id.id,
-        }
+               'partner_id': cecalumnos_obj.partner_id.id,
+               }
         usr_id = self.pool.get('res.users').create(cr, uid, res)
 
         return cecalumnos_obj.id
