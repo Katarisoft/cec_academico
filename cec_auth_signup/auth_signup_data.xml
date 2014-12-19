@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-    <data noupdate="1">
+    <data noupdate="0">
 
 
         <!-- Email template for reset password -->
-        <record id="reset_password_email" model="email.template">
+        <record id="auth_signup.reset_password_email" model="email.template">
             <field name="name">Reset Password</field>
             <field name="model_id" ref="base.model_res_users"/>
             <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
@@ -19,7 +19,7 @@
         </record>
         
         <!-- Email template for new users -->
-        <record id="set_password_email" model="email.template">
+        <record id="auth_signup.set_password_email" model="email.template">
             <field name="name">Odoo Enterprise Connection</field>
             <field name="model_id" ref="base.model_res_users"/>
             <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
@@ -31,7 +31,7 @@
                         Estimado ${object.name},
                     </p>
                     <p>
-                        Usted ha cerado una cuenta en el sistema académico de "${object.company_id.name}" para acceder a tus notas e incribirte en cursos.
+                        Usted ha creado una cuenta en el sistema académico de "${object.company_id.name}" para acceder a tus notas e incribirte en cursos.
                     </p>
                     <p>
                         Thanks,
