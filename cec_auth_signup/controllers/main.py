@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2012-today OpenERP SA (<http://www.openerp.com>)
@@ -32,33 +32,62 @@ from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT, ustr
 _logger = logging.getLogger(__name__)
 
 class AuthSignupHome(openerp.addons.web.controllers.main.Home):
-    
+
     @http.route('/web/teachers', type='http', auth='public', website=True)
     def web_auth_signup_teachers(self, *args, **kw):
-        print "algo"
+        qcontext = self.get_auth_signup_qcontext()
 
-    def do_signup(self, qcontext):
-        #raise SignupError(_('sa'))
+        if not qcontext.get('token') and not qcontext.get('signup_enabled'):
+            raise werkzeug.exceptions.NotFound()
+
+        if 'error' not in qcontext and request.httprequest.method == 'POST':
+            try:
+                self.do_signup_teachers(qcontext)
+                return super(AuthSignupHome, self).web_login(*args, **kw)
+            except (SignupError, AssertionError), e:
+                qcontext['error'] = _(e.message)
+
+        return request.render('cec_auth_signup.signup', qcontext)
+
+    def do_signup_teachers(self, qcontext):
         values = dict((key, qcontext.get(key)) for key in ('login', 'name', 'password'))
         assert any([k for k in values.values()]), "The form was not properly filled in."
         assert values.get('password') == qcontext.get('confirm_password'), "Passwords do not match; please retype them."
-        #self._signup_with_values(qcontext.get('token'), values)
-        #request.cr.commit()
 
         if qcontext.get('token'):
             return super(AuthSignupHome, self).do_signup(qcontext)
         else:
             try:
-                request.registry['cec.alumnos'].create(request.cr, openerp.SUPERUSER_ID,{'name' : values.get('name'), 'email' : values.get('login')}, {"password" : values.get('password')} )
+                request.registry['cec.docentes'].create(request.cr, openerp.SUPERUSER_ID,
+                                                       {'name': values.get('name'), 'email': values.get('login')},
+                                                       {"password": values.get('password')})
                 request.cr.commit()
             except Exception, e:
                 raise SignupError(ustr(e))
-                #raise SignupError(ustr(e)) 
         print request.cr.dbname
         uid = request.session.authenticate(request.cr.dbname, values.get('login'), values.get('password'))
         if not uid:
             raise SignupError(_('Authentification Failed.'))
 
+    def do_signup(self, qcontext):
+        values = dict((key, qcontext.get(key)) for key in ('login', 'name', 'password'))
+        assert any([k for k in values.values()]), "The form was not properly filled in."
+        assert values.get('password') == qcontext.get('confirm_password'), "Passwords do not match; please retype them."
 
+        if qcontext.get('token'):
+            return super(AuthSignupHome, self).do_signup(qcontext)
+        else:
+            try:
+                request.registry['cec.alumnos'].create(request.cr, openerp.SUPERUSER_ID,
+                                                       {'name': values.get('name'), 'email': values.get('login')},
+                                                       {"password": values.get('password')})
+                request.cr.commit()
+            except Exception, e:
+                raise SignupError(ustr(e))
+                #raise SignupError(ustr(e))
+        print request.cr.dbname
+        uid = request.session.authenticate(request.cr.dbname, values.get('login'), values.get('password'))
+        if not uid:
+            raise SignupError(_('Authentification Failed.'))
 
 # vim:expandtab:tabstop=4:softtabstop=4:shiftwidth=4:
