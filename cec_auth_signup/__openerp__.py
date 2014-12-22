@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+# #############################################################################
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2009-today OpenERP SA (<http://www.openerp.com>)
@@ -38,6 +38,7 @@ Allow users to sign up and reset their password
     ],
     'data': [
         'auth_signup_data.xml',
+        'views/auth_signup_login_teachers.xml',
         #'res_config.xml',
         #'res_users_view.xml',
         #'views/auth_signup_login.xml',
