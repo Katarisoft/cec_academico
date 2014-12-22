@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# #############################################################################
+##############################################################################
 #
-# OpenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -29,11 +29,8 @@ import openerp.tools.image as imageoerp
 import re
 import datetime
 import pdb
-#from validation import validation
 
 # Creación inicia de cursos de capacitacióy y educación continua
-
-
 class course(osv.osv):
     _name = "course"
     _description = u"Creación de los cursos de educación continua"
@@ -51,16 +48,12 @@ class course(osv.osv):
         return True
 
     def carga_unidades(self, cr, uid, ids, context=None):
-        print ids
         query = "delete from course_docentes where course_id = %s" % (str(ids[0]))
         cr.execute(query)
         course_obj = self.browse(cr, uid, ids)
-        print course_obj
-        print course_obj.learning_unit_id
         for unit in course_obj.learning_unit_id:
             unit_ids = self.pool.get('learning.unit').search(cr, uid, [('superior', '=', unit.id)])
             unit_obj = self.pool.get('learning.unit').browse(cr, uid, unit_ids)
-            print unit_obj
             for unit in unit_obj:
                 self.pool.get('course.docentes').create(cr, uid, {'name': unit.name, 'course_id': ids[0],
                                                                   'learning_unit_id': unit.id})
@@ -168,14 +161,10 @@ class course_student(osv.osv):
 
     def _get_mark_ids(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
-        print ids
         for mark in self.browse(cr, uid, ids, context=context):
-            print mark
             partner_obj = self.pool.get('res.users').browse(cr, uid, uid)
-            res[mark.id] = self.pool.get('course.student.mark').search(cr, uid,
-                                                                       [('partner_id', '=', partner_obj.partner_id.id),
-                                                                        ('course_student_id', '=', mark.id)])
-        print res
+            res[mark.id] = self.pool.get('course.student.mark').search(cr, uid,[('partner_id', '=', partner_obj.partner_id.id),
+                                                                                ('course_student_id', '=', mark.id)])
         return res
 
     _columns = {
@@ -185,17 +174,14 @@ class course_student(osv.osv):
         'assistance': fields.function(_assistance, type='integer', store=True, string='Asistencia', size=3),
         'approbate': fields.function(_aprobate, type='boolean', store=True, string='Aprobado?', ),
         'course_student_mark_ids': fields.one2many('course.student.mark', 'course_student_id', 'Notas x materi', ),
-        #'course_student_mark_ids' : fields.function(_get_mark_ids, type="one2many", method=True,relation='course.student.mark',string='Notas x materia'),
     }
-
-    _sql_constraints = [
-        ('course_id_unique_student', 'unique (partner_id,course_id)', 'El estudiante ya está inscrito en este curso !')
-    ]
+    _sql_constraints = [('course_id_unique_student', 'unique (partner_id,course_id)', 'El estudiante ya está inscrito en este curso !')]
 
 
 class course_student_mark(osv.osv):
     _name = "course.student.mark"
     _description = ""
+
     _columns = {
         'course_student_id': fields.many2one('course.student', "Curso x estudiante"),
         'learning_unit_id': fields.many2one('learning.unit', "Materia"),
@@ -207,13 +193,13 @@ class course_student_mark(osv.osv):
 
 class course_student_inscription(osv.osv_memory):
     _name = "course.student.inscription"
+    _description = ""
 
     def inscribir(self, cr, uid, ids, context=None):
         inscription_obj = self.browse(cr, uid, ids)
         res = {}
         for inscription in inscription_obj:
-            course_student_ids = self.pool.get('course.student').search(cr, uid,
-                                                                        [('course_id', '=', inscription.course_id.id)])
+            course_student_ids = self.pool.get('course.student').search(cr, uid,[('course_id', '=', inscription.course_id.id)])
             if course_student_ids:
                 if len(course_student_ids) == inscription.course_id.max_students:
                     raise osv.except_osv(_('ADVERTENCIA!'), _('El cupo maximo del curso %s se ha completado') % (
@@ -226,12 +212,10 @@ class course_student_inscription(osv.osv_memory):
             if not inscription.course_id.course_docentes_ids:
                 self.pool.get('course').carga_unidades(cr, uid, [inscription.course_id.id])
             for course in inscription.course_id.course_docentes_ids:
-                res = {'course_student_id': course_student_id, 'learning_unit_id': course.learning_unit_id.id,
-                       'partner_id': course.teacher.id}
+                res = {'course_student_id': course_student_id, 'learning_unit_id': course.learning_unit_id.id, 'partner_id': course.teacher.id}
                 self.pool.get('course.student.mark').create(cr, uid, res)
 
         return True
-
 
     _columns = {
         'partner_id': fields.many2one('res.partner', string='Alumno'),

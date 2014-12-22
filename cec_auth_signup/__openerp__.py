@@ -22,8 +22,8 @@
 {
     'name': ' CEC EP Signup',
     'description': """
-Allow users to sign up and reset their password
-===============================================
+    Allow users to sign up and reset their password
+    ===============================================
     """,
     'author': 'CEC EP',
     'version': '1.0',

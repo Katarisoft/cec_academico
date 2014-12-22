@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-# #############################################################################
+###############################################################################
 #
-# OpenERP, Open Source Management Solution
-# Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -32,24 +32,6 @@ import re
 #DATOS DE USUARIO DEL SISTEMA
 class res_partner(osv.osv):
     _inherit = "res.partner"
-    #_inherits = {'res.partner':'partner_id'}
-    _columns = {
-        "identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
-        "identification_number": fields.char(u"ced/pass", size=13, required=True,
-                                             help="Cedula de Identidad, Pasaporte, CCI, DNI"),
-        "gender_id": fields.many2one("gender", "Género", required=True),
-        "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
-        "state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
-        "nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
-        "street2": fields.char("Calle Secundaria", required=False),
-        "location_reference": fields.text("Referencia"),
-        "disability": fields.boolean("Tipo discapacidad"),
-        "disability_id": fields.many2one("type.disability", "Discapacidad"),
-        "conadis_number": fields.char("Carnet CONADIS", size=10, require=True),
-        "etnia": fields.many2one("ethnic.group", "Grupo etnico"),
-    }
-    _sql_constraints = [('identification_number_unique', 'unique(identification_number)',
-                         _(u'Ya existe un registro con ese número de identificación.'))]
 
     def city_change(self, cr, uid, ids, city, context=None):
         value = {}
@@ -67,3 +49,19 @@ class res_partner(osv.osv):
             return {'value': {'proposal_file_name': "%s_PA.pdf" % (name.upper())}}
         else:
             return {'value': {}}
+
+    _columns = {
+        "identification_type_id": fields.many2one("identification.type", u"Identificación", required=True),
+        "identification_number": fields.char(u"CED/PASS", size=13, required=True, help="Cedula de Identidad, Pasaporte, CCI, DNI"),
+        "gender_id": fields.many2one("gender", "Género", required=True),
+        "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),
+        "state_id": fields.many2one("res.country.state", "Estado/Provincia", required=False),
+        "nationality_id": fields.many2one("nationality", "Nacionalidad", required=True),
+        "street2": fields.char("Calle Secundaria", required=False),
+        "location_reference": fields.text("Referencia"),
+        "disability": fields.boolean("Tipo discapacidad"),
+        "disability_id": fields.many2one("type.disability", "Discapacidad"),
+        "conadis_number": fields.char("Carnet CONADIS", size=10, require=True),
+        "etnia": fields.many2one("ethnic.group", "Grupo étnico"),
+    }
+    _sql_constraints = [('identification_number_unique', 'unique(identification_number)', _(u'Ya existe un registro con ese número de identificación.'))]

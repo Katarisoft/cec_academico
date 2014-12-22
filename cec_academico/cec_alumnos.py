@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # #############################################################################
 #
-# OpenERP, Open Source Management Solution
-# Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -33,28 +33,13 @@ import random
 
 
 def random_password():
-    # the token has an entropy of about 120 bits (6 bits/char * 20 chars)                                                                                                                                          
+    # random password for the new alumns and teachers)
     chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     return ''.join(random.choice(chars) for i in xrange(8))
-
 
 class cec_alumnos(osv.osv):
     _name = "cec.alumnos"
     _inherits = {'res.partner': 'partner_id'}
-    _columns = {
-        "senescyt": fields.char("Registro SENESCYT",
-                                help="En caso de tener títulos registrados ingrese el número de registro"),
-        "work_institution": fields.char("Institución de trabajo", size=255),
-        "charge": fields.char("Cargo", size=200),
-        "work_email": fields.char("E-mail de trabajo", size=255),
-        "work_city": fields.many2one("canton", "Ciudad de Trabajo"),
-        "work_address": fields.char("Dirección del trabajo", size=255),
-        "partner_id": fields.many2one('res.partner', 'partner', required=True, ondelete="cascade"),
-        "is_alumn": fields.boolean("Es alumno?"),
-    }
-    _defaults = {
-        "is_alumn": True
-    }
 
     def create(self, cr, uid, vals, context=None):
         res = {}
@@ -85,3 +70,18 @@ class cec_alumnos(osv.osv):
                 value['state_id'] = city_obj.country_state_id.id
                 value['country_id'] = city_obj.country_state_id.country_id.id
         return {'value': value}
+
+
+    _columns = {
+        "senescyt": fields.char("Registro SENESCYT", help="En caso de tener títulos registrados ingrese el número de registro"),
+        "work_institution": fields.char("Institución de trabajo", size=255),
+        "charge": fields.char("Cargo", size=200),
+        "work_email": fields.char("E-mail de trabajo", size=255),
+        "work_city": fields.many2one("canton", "Ciudad de Trabajo"),
+        "work_address": fields.char("Dirección del trabajo", size=255),
+        "partner_id": fields.many2one('res.partner', 'partner', required=True, ondelete="cascade"),
+        "is_alumn": fields.boolean("Es alumno?"),
+    }
+    _defaults = {
+        "is_alumn": True
+    }
