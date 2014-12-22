@@ -216,12 +216,12 @@ class cec_docentes(osv.osv):
         "tematica_id": fields.many2many('tematica.type', 'tematica_res_partner', 'partner_id', 'tematica_id',
                                         "Tematicas"),
         "partner_id": fields.many2one('res.partner', 'partner', required=True, ondelete="cascade"),
-        "is_teacher": fields.boolean("Es alumno?"),
+        #"is_teacher": fields.boolean("Es profesor?"),
     }
 
-    _defaults = {
-        "is_teacher": True
-    }
+    #_defaults = {
+    #    "is_teacher": True
+    #}
 
     def create(self, cr, uid, vals, context=None):
         res = {}

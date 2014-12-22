@@ -35,7 +35,7 @@ class res_partner(osv.osv):
     #_inherits = {'res.partner':'partner_id'}
     _columns = {
         "identification_type_id": fields.many2one("identification.type", u"Tipo de Identificación", required=True),
-        "identification_number": fields.char(u"ced/pass", size=13, required=True,
+        "identification_number": fields.char(u"Nro. Identificación", size=13, required=True,
                                              help="Cedula de Identidad, Pasaporte, CCI, DNI"),
         "gender_id": fields.many2one("gender", "Género", required=True),
         "residence_city_id": fields.many2one("canton", "Ciudad de Residencia", required=False),

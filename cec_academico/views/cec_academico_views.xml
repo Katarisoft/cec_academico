@@ -56,7 +56,7 @@
 	    <field name="course_docentes_ids" required="1">
 	      <tree  editable="bottom">
 		<field name="name"/>
-		<field name="teacher" domain="[('is_teacher','=',True)]" widget="selectio"/>
+		<field name="teacher" widget="selection"/>
 	      </tree>
 	    </field>
           </sheet>
@@ -136,7 +136,7 @@
 		        <field name="learning_unit_id" readonly="1" required="1"/>
 		        <field name="mark"/>
 		        <field name="assistance"/>
-                 <field name="partner_id" domain="[('is_teacher','=',True)]" invisible="1"/>
+                <!-- field name="partner_id" domain="[('is_alumn','=',True)]" invisible="1"/> -->
 		      </tree>
 	        </field>
           </sheet>
@@ -150,7 +150,7 @@
       <field name="arch" type="xml">
         <form string="Inscripciøn de estudiantes" version="8.0">
           <group span="4">
-            <field name="partner_id" domain="[('is_alumn','=',True)]" required="1"/>
+            <field name="partner_id" required="1"/>
             <field name="course_id" required="1" domain="[('open','=',True)]"/>
           </group>
 	  <footer>
