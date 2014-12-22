@@ -62,6 +62,7 @@ class cec_alumnos(osv.osv):
         cecalumnos_obj = self.browse(cr, uid, res_id)
         if not 'password' in context:
             vals['password'] = random_password()
+            print vals['password']
         else:
             vals['password'] = context['password']
 

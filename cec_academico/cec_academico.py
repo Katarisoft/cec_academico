@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # #############################################################################
 #
-#    OpenERP, Open Source Management Solution
+# OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -33,6 +33,7 @@ import pdb
 
 # Creación inicia de cursos de capacitacióy y educación continua
 
+
 class course(osv.osv):
     _name = "course"
     _description = u"Creación de los cursos de educación continua"
@@ -48,7 +49,6 @@ class course(osv.osv):
                 raise osv.except_osv(_('ERROR!'), _('EL número máximo de estudiantes debe ser mayor a la mínima'))
             raise osv.except_osv(_('ERROR!'), _('La fecha de fin debe ser mayor a la de inicio'))
         return True
-
 
     def carga_unidades(self, cr, uid, ids, context=None):
         print ids
@@ -79,7 +79,8 @@ class course(osv.osv):
         res = dict()
         for course in self.browse(cr, uid, ids, context=context):
             if (datetime.datetime.strptime(course.start_date_inscription, '%Y-%m-%d') <= datetime.datetime.now()) and (
-                datetime.datetime.strptime(course.finish_date_inscription, '%Y-%m-%d') >= datetime.datetime.now()):
+                        datetime.datetime.strptime(course.finish_date_inscription,
+                                                   '%Y-%m-%d') >= datetime.datetime.now()):
                 res[course.id] = True
             else:
                 res[course.id] = False
@@ -102,7 +103,6 @@ class course(osv.osv):
         "open": fields.function(_is_open, type="boolean", store=True, string="abierto"),
         "course_docentes_ids": fields.one2many('course.docentes', 'course_id', 'Unidades de Aprendisajes',
                                                delete='cascade', ),
-
     }
 
 
@@ -217,7 +217,7 @@ class course_student_inscription(osv.osv_memory):
             if course_student_ids:
                 if len(course_student_ids) == inscription.course_id.max_students:
                     raise osv.except_osv(_('ADVERTENCIA!'), _('El cupo maximo del curso %s se ha completado') % (
-                    inscription.course_id.name))
+                        inscription.course_id.name))
 
             res = {'partner_id': inscription.partner_id.id, 'course_id': inscription.course_id.id, }
             course_student_id = self.pool.get('course.student').create(cr, uid, res)
