@@ -179,7 +179,7 @@ class course_student(osv.osv):
         return res
 
     _columns = {
-        'partner_id': fields.many2one('res.partner', 'Alumno'),
+        'partner_id': fields.many2one('cec.alumnos', 'Alumno'),
         'course_id': fields.many2one('course', 'Curso'),
         'mark': fields.function(_mark, type="integer", store=True, string='Promedio General', size=3),
         'assistance': fields.function(_assistance, type='integer', store=True, string='Asistencia', size=3),
@@ -234,6 +234,6 @@ class course_student_inscription(osv.osv_memory):
 
 
     _columns = {
-        'partner_id': fields.many2one('res.partner', string='Alumno'),
+        'partner_id': fields.many2one('cec.alumnos', string='Alumno'),
         'course_id': fields.many2one('course', 'Curso'),
     }
