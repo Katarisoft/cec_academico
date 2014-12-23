@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # #############################################################################
 #
-# OpenERP, Open Source Management Solution
-# Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
 #
-# This program is free software: you can redistribute it and/or modify
+#    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
 #    published by the Free Software Foundation, either version 3 of the
 #    License, or (at your option) any later version.
@@ -35,6 +35,7 @@ class title_info(osv.osv):
     """ Clase para registrar los titulos de un docente."""
     _name = "title.info"
     _description = "Subir documentacion de Títulos Academicos"
+    
     _columns = {
         'name': fields.char('Titulo', size=124),
         #'register': fields.char('Registro Senescyt', size=124),
@@ -53,6 +54,7 @@ class experience_info(osv.osv):
     """ Clase para registrar los experiences de un docente."""
     _name = "experience.info"
     _description = "Experiencia Docente"
+
     _columns = {
         'name': fields.char('Institucion', size=124),
         'finicio': fields.date('Fecha Inicio'),
@@ -72,6 +74,7 @@ class publication_info(osv.osv):
     """ Clase para registrar las publicaciones y obras de un docente."""
     _name = "publication.info"
     _description = "Publicaciones y Obras"
+
     _columns = {
         'name': fields.char('Publicacion', size=124),
         'date': fields.char('Año de publicacion', size=124),
@@ -89,6 +92,7 @@ class publication_info(osv.osv):
 class evaluation_info(osv.osv):
     """ Clase para registrar las evaluaciones de desempeño de un docente."""
     _name = "evaluation.info"
+
     _description = "Evaluaciones de Desempeño"
     _columns = {
         'name': fields.char('Evaluacion', size=124),
@@ -107,6 +111,7 @@ class instruction_info(osv.osv):
     """ Clase para registrar las capacitaciones de un docente."""
     _name = "instruction.info"
     _description = "Capacitaciones"
+
     _columns = {
         'name': fields.char('Capacitacion', size=124),
         'institucion': fields.char('Institucion', size=124),
@@ -127,6 +132,7 @@ class project_info(osv.osv):
     """ Clase para registrar los proyectos de un docente."""
     _name = "project.info"
     _description = "Proyectos"
+
     _columns = {
         'name': fields.char('Proyecto', size=124),
         'institucion': fields.char('Institucion', size=124),
@@ -146,6 +152,7 @@ class tutoring_info(osv.osv):
     """ Clase para registrar las tutorías de doctorado y maestría de  un docente."""
     _name = "tutoring.info"
     _description = "Títulos Académicos"
+
     _columns = {
         'name': fields.char('Tema tutoría', size=124),
         'institucion': fields.char('Institucion', size=124),
@@ -165,6 +172,7 @@ class language_info(osv.osv):
     """ Clase para registrar los titulos de un docente."""
     _name = "language.info"
     _description = "Títulos Academicos"
+
     _columns = {
         'name': fields.char('Idioma', size=124),
         'lectura': fields.integer('Nivel Lectura'),
@@ -181,47 +189,13 @@ class language_info(osv.osv):
 
 
 def random_password():
-        chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-        return ''.join(random.choice(chars) for i in xrange(8))
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    return ''.join(random.choice(chars) for i in xrange(8))
 
 
 class cec_docentes(osv.osv):
     _name = "cec.docentes"
     _inherits = {'res.partner': 'partner_id'}
-    _columns = {
-        "proposal_file_name": fields.char('proposal_file_name', size=124),
-        "curriculum": fields.binary("Hoja de Vida", filters=["*.pdf", "*.PDF"]),
-        "id_copy": fields.binary("Copia de Cedula o Pasaporte", filters="*.pdf, *.PDF",),
-        "title_info_ids": fields.one2many("title.info", "partner_id", "Subir documentacion de Títulos Academicos",
-                                          requiered=False),
-        #"proposal_info_ids": fields.one1many("proposal.info", "partner_id", "Propuesta Académica", requiered=False),
-        "experience_info_ids": fields.one2many("experience.info", "partner_id",
-                                               "Subir documentacion de Experiencia Docente", requiered=False),
-        "publication_info_ids": fields.one2many("publication.info", "partner_id",
-                                                "Subir documetntacion de Publicaciones y Obras", requiered=False),
-        "evaluation_info_ids": fields.one2many("evaluation.info", "partner_id",
-                                               "Subir documentacion de Evaluaciones de Desempeño", requiered=False),
-        "instruction_info_ids": fields.one2many("instruction.info", "partner_id",
-                                                "Subir documentacion de Capacitaciones", requiered=False),
-        "project_info_ids": fields.one2many("project.info", "partner_id",
-                                            "Subir documentacion de Proyectos de Investigacion", requiered=False),
-        "tutoring_info_ids": fields.one2many("tutoring.info", "partner_id",
-                                             "Subir documentacion de Tutorías de Tesis y Maestrias", requiered=False),
-        "language_info_ids": fields.one2many("language.info", "partner_id", "Subir documentacion de Lenguajes",
-                                             requiered=False),
-        "horario": fields.selection([("cualquier_dia", "Cualquier día"),
-                                     ("entre_semana", "Entre semana"),
-                                     ("fin_de_semana", "Fin de semana")],
-                                    "Jornada de labores"),
-        "tematica_id": fields.many2many('tematica.type', 'tematica_res_partner', 'partner_id', 'tematica_id',
-                                        "Tematicas"),
-        "partner_id": fields.many2one('res.partner', 'partner', required=True, ondelete="cascade"),
-        #"is_teacher": fields.boolean("Es profesor?"),
-    }
-
-    #_defaults = {
-    #    "is_teacher": True
-    #}
 
     def create(self, cr, uid, vals, context=None):
         res = {}
@@ -229,7 +203,6 @@ class cec_docentes(osv.osv):
         cecdocentes_obj = self.browse(cr, uid, res_id)
         if not 'password' in context:
             vals['password'] = random_password()
-            print vals['password']
         else:
             vals['password'] = context['password']
 
@@ -292,4 +265,29 @@ class cec_docentes(osv.osv):
                 value['country_id'] = city_obj.country_state_id.country_id.id
         return {'value': value}
 
-        #_constraints = [(only_numbers, u'Los números telefónicos deben contener únicamente dígitos.', ['phone','mobile'])]
+    _columns = {
+        "proposal_file_name": fields.char('proposal_file_name', size=124),
+        "curriculum": fields.binary("Hoja de Vida", filters=["*.pdf", "*.PDF"]),
+        "id_copy": fields.binary("Copia de Cedula o Pasaporte", filters="*.pdf, *.PDF",),
+        "title_info_ids": fields.one2many("title.info", "partner_id", "Subir documentacion de Títulos Academicos",),
+        "experience_info_ids": fields.one2many("experience.info", "partner_id", "Subir documentacion de Experiencia Docente",),
+        "publication_info_ids": fields.one2many("publication.info", "partner_id", "Subir documetntacion de Publicaciones y Obras",),
+        "evaluation_info_ids": fields.one2many("evaluation.info", "partner_id", "Subir documentacion de Evaluaciones de Desempeño",),
+        "instruction_info_ids": fields.one2many("instruction.info", "partner_id", "Subir documentacion de Capacitaciones",),
+        "project_info_ids": fields.one2many("project.info", "partner_id", "Subir documentacion de Proyectos de Investigacion",),
+        "tutoring_info_ids": fields.one2many("tutoring.info", "partner_id", "Subir documentacion de Tutorías de Tesis y Maestrias",),
+        "language_info_ids": fields.one2many("language.info", "partner_id", "Subir documentacion de Lenguajes",),
+        "horario": fields.selection([("cualquier_dia", "Cualquier día"),
+                                     ("entre_semana", "Entre semana"),
+                                     ("fin_de_semana", "Fin de semana")],"Jornada de labores"),
+        "tematica_id": fields.many2many('tematica.type', 'tematica_res_partner', 'partner_id', 'tematica_id', "Tematicas"),
+        "partner_id": fields.many2one('res.partner', 'partner', required=True, ondelete="cascade"),
+        "is_teacher": fields.boolean("Es alumno?"),
+    }
+
+    _defaults = {
+        "is_teacher": True
+    }
+    
+    #_constraints = [(only_numbers, u'Los números telefónicos deben contener únicamente dígitos.', ['phone','mobile'])]
+    

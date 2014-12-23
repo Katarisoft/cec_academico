@@ -7,9 +7,9 @@
       <field name="model">course</field>
       <field name="arch" type="xml">
         <tree colors="green:open == True;blue:active == True;red:active == False" string="Curso">
-	  <field name="project"/>
+	      <field name="project"/>
           <field name="name"/>
-	  <field name="start_date_inscription" />
+	      <field name="start_date_inscription" />
           <field name="finish_date_inscription"/>
           <field name="start_date"/>
           <field name="finish_date"/>
@@ -19,8 +19,8 @@
           <field name="max_mark"/>
           <field name="assistance"/>
           <field name="learning_unit_id"/>
-	  <field name="active" invisible="0"/>
-	  <field name="open" invisible="0"/>
+	      <field name="active" invisible="0"/>
+	      <field name="open" invisible="0"/>
         </tree>
       </field>
     </record>
@@ -30,35 +30,37 @@
       <field name="model">course</field>
       <field name="arch" type="xml">
         <form string="Curso" version="8.0">
-	  <sheet>
+	      <sheet>
             <group>
-	      <field name="project" required="1"/>
+	          <field name="project" required="1"/>
               <field name="name" required="1"/>
-	    </group>
-	    <group col="4">
-	      <field name="start_date_inscription" required="1" />
-	      <field name="finish_date_inscription" required="1" on_change="compare(start_date_inscription,finish_date_inscription)"/>
-	      <field name="start_date" required="1" on_change="compare(finish_date_inscription,start_date,'1')"/>
-	      <field name="finish_date" required="1" on_change="compare(start_date,finish_date)"/>
-	      <field name="min_students" required="1"/>
-	      <field name="max_students" required="1" on_change="compare(min_students,max_students,'s')"/>
-	      <field name="min_mark" required="1"/>
-	      <field name="max_mark" required="1" on_change="compare(min_mark,max_mark,'m')"/>
-	      <field name="assistance" required="1"/>
-	    </group>
-	    <group>
+	        </group>
+	        <group col="4">
+	          <field name="start_date_inscription" required="1" />
+	          <field name="finish_date_inscription" required="1" on_change="compare(start_date_inscription,finish_date_inscription)"/>
+	          <field name="start_date" required="1" on_change="compare(finish_date_inscription,start_date,'1')"/>
+	          <field name="finish_date" required="1" on_change="compare(start_date,finish_date)"/>
+	          <field name="min_students" required="1"/>
+	          <field name="max_students" required="1" on_change="compare(min_students,max_students,'s')"/>
+	          <field name="min_mark" required="1"/>
+	          <field name="max_mark" required="1" on_change="compare(min_mark,max_mark,'m')"/>
+	          <field name="assistance" required="1"/>
+	        </group>
+	        <group>
               <separator string="Módulos"/>
-	      <newline/>
+	          <newline/>
               <field name="learning_unit_id" domain="[('module', '=', True)]" nolabel="1" required="1"/>
-	    </group>
-	    <label string="Materias x profesor"/>
-	    <button name="carga_unidades" type="object" string="Carga Unidades de Aprendizaje"/>
-	    <field name="course_docentes_ids" required="1">
-	      <tree  editable="bottom">
-		<field name="name"/>
-		<field name="teacher" widget="selection"/>
-	      </tree>
-	    </field>
+
+	        </group>
+	        <label string="Materias x profesor"/>
+	        <button name="carga_unidades" type="object" string="Carga Unidades de Aprendizaje"/>
+	        <field name="course_docentes_ids" required="1">
+	          <tree  editable="bottom">
+		        <field name="name"/>
+		        <field name="teacher" widget="selection"/>
+	          </tree>
+	        </field>
+
           </sheet>
         </form>
       </field>
@@ -72,7 +74,7 @@
           
           <field name="project"/>
           <field name="name"/>
-    
+          
         </calendar>
       </field>
     </record>
@@ -82,9 +84,9 @@
       <field name="model">learning.unit</field>
       <field name="arch" type="xml">
         <tree colors="blue:module == True;black:module == False" string="Unidades de Aprendizaje">
-	  <field name="module"/>
           <field name="name"/>
           <field name="superior"/>
+	      <field name="module"/>
         </tree>
       </field>
     </record>
@@ -96,8 +98,8 @@
         <form string="unidades de Aprendizaje" version="8.0">
           <sheet>
             <group>
-	      <field name="name"/>
-	      <field name="module"/>
+	          <field name="name"/>
+	          <field name="module"/>
               <field name="superior" domain="[('module', '=', True)]"  attrs="{'invisible':[('module','=',True)],'required':[('module','=',False)]}"/>
             </group>
           </sheet>
@@ -110,8 +112,8 @@
       <field name="model">course.student</field>
       <field name="arch" type="xml">
         <tree string="Curso x estudiantes" colors="blue:approbate == True;red:approbate == False">
-              <field name="partner_id"/>
-              <field name="course_id"/>
+          <field name="partner_id"/>
+          <field name="course_id"/>
 	      <field name="approbate" />
         </tree>
       </field>
@@ -136,7 +138,6 @@
 		        <field name="learning_unit_id" readonly="1" required="1"/>
 		        <field name="mark"/>
 		        <field name="assistance"/>
-                <!-- field name="partner_id" domain="[('is_alumn','=',True)]" invisible="1"/> -->
 		      </tree>
 	        </field>
           </sheet>
@@ -144,7 +145,7 @@
       </field>
     </record>
 
-<record id="view_course_student_inscription_form" model="ir.ui.view">
+    <record id="view_course_student_inscription_form" model="ir.ui.view">
       <field name="name">view.course.student.inscription.form</field>
       <field name="model">course.student.inscription</field>
       <field name="arch" type="xml">
@@ -153,9 +154,9 @@
             <field name="partner_id" required="1"/>
             <field name="course_id" required="1" domain="[('open','=',True)]"/>
           </group>
-	  <footer>
-	    <button name="inscribir" string="Inscribir" type="object"  icon="gtk-apply"/>
-	  </footer>
+	      <footer>
+	        <button name="inscribir" string="Inscribir" type="object"  icon="gtk-apply"/>
+	      </footer>
         </form>
       </field>
     </record>

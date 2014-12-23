@@ -37,121 +37,122 @@
       <field name="arch" type="xml">
 	    <form string="Docentes" version="7.0">
           <sheet>
-	      <notebook colspan="4">
-	        <page string="Datos Personales">
-	          <field name="image" widget="image" style="margin-left:30px" height="90" width="90" class="oe_left oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
-	          <div class="oe_title"> 
-		        <h1>
-		          <field name="name" default_focus="1" placeholder="Name" on_change="on_name(name)"/>
-		        </h1>
-		      </div>
-	          <group> 
-		        <group> 
-		          <separator colspan="4" string="Información"/>
-		          <field name="identification_type_id" widget="selection"/>
-		          <field name="identification_number"/>
-		          <field name="etnia" widget="selection"/>
-                  <field name="gender_id" widget="selection"/>
-                  <field name="nationality_id" widget="selection"/>
-                  <field name="horario"/>
-                  <field name="disability"/>
+	        <notebook colspan="4">
+	          <page string="Datos Personales">
+	            <field name="image" widget="image" style="margin-left:30px" height="90" width="90" class="oe_left oe_avatar" options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+	            <div class="oe_title"> 
+                    <label for="name" class="oe_edit_only"/>
+		            <h1><field name="name" default_focus="1" placeholder="Name" on_change="on_name(name)"/></h1>
+                    <label for="email" class="oe_edit_only"/>
+                    <field name="email" placeholder="Correo Personal"/>
+		        </div>
+	            <group> 
+		          <group> 
+		            <separator colspan="4" string="Información"/>
+		            <field name="identification_type_id" widget="selection"/>
+		            <field name="identification_number"/>
+		            <field name="etnia" widget="selection" required="1"/>
+                    <field name="gender_id" widget="selection"/>
+                    <field name="nationality_id" widget="selection"/>
+                    <field name="horario"/>
+                    <field name="disability"/>
+                    <newline/>
+                    <field name="disability_id"
+                           attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}" widget="selection"/>
+                    <newline/>
+                    <field name="conadis_number"
+                           attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}"/>
+                    <newline/>
+		          </group>
+                  
+                  <group>
+                    <separator colspan="4" string="Dirección"/>
+                    <field name="street" placeholder="Calle Principal..." required="1"/>
+                    <field name="street2" placeholder="Calle Secundaria..."/>
+                    <field name="residence_city_id" on_change="city_change(residence_city_id)"/>
+                    <field name="state_id" widget="selection"/>
+                    <field name="location_reference" placeholder="Describa con mas detalle la ubicación de su domicilio"/>
+                    <newline/>
+                  </group>
+	              
+		          <group col="4" colspan="2">
+                    <separator string="Adjunte su curriculum" colspan="4"/>
+		            <field name="curriculum"/> 
+		            <!--<field name="id_copy"/>--> 
+		            <!--<field name="proposal_file_name" invisible="1"/>
+		                <field name="proposal" filename="file_name"/>-->
+                    <newline/>
+		          </group>
+                  
+		          <group>
+		            <separator string="Elija la temática(s) para la(s) que aplica:" colspan="4"/>
+		            <field name="tematica_id"/>
+		          </group>
                   <newline/>
-                  <field name="disability_id"
-                         attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}" widget="selection"/>
-                  <newline/>
-                  <field name="conadis_number"
-                         attrs="{'invisible':[('disability', '=', False)], 'required':[('disability', '=', True)]}"/>
-                  <newline/>
-		        </group>
+	            </group>
+	          </page>
+	          <page string="Datos Adicionales">
+     	        <h2>Títulos Académicos</h2>
+	            <!--<page string="Títulos">-->
+	            <field name="title_info_ids" nolabel="1">
+		          <tree string="Títulos Académicos">
+		            <field name="name"/>
+		            <field name="register"/>
+		            <field name="date"/>
+		            
+		            <!-- <field name="title_file" filename="title_file_name"/> -->
+		          </tree>	
+	            </field>
+                <h2>Experiencia Docente</h2>
+	            <field name="experience_info_ids" nolabel="1">
+		          <tree string="Subir Certificados">
+		            <field name="name"/>
+		            <field name="finicio"/>
+		            <field name="ffin"/>
+		            <field name="actual"/>
+		            <!--<field name="title_file_name" string="Subir Certificados"/>-->
+		          </tree>	
+	            </field>
+
+	            <h2> Publicaciones </h2>
+	            <field name="publication_info_ids" nolabel="1">
+		          <tree string="Publicaciones">
+		            <field name="name"/>
+		            <field name="date"/>
+		            <field name="description"/>
+		            <!--<field name="title_file_name" string="Publicaciones"/>-->
+		          </tree>	
+	            </field>
                 
-                <group>
-                  <separator colspan="4" string="Dirección"/>
-                  <field name="street" placeholder="Calle Principal..." required="1"/>
-                  <field name="street2" placeholder="Calle Secundaria..."/>
-                  <field name="residence_city_id" on_change="city_change(residence_city_id)"/>
-                  <field name="state_id" widget="selection"/>
-                  <field name="location_reference" placeholder="Describa con mas detalle la ubicación de su domicilio"/>
-                  <newline/>
-                </group>
-	          
-		        <group col="4" colspan="2">
-                  <separator string="Adjunte su curriculum" colspan="4"/>
-		          <field name="curriculum"/> 
-		          <!--<field name="id_copy"/>--> 
-		          <!--<field name="proposal_file_name" invisible="1"/>
-		              <field name="proposal" filename="file_name"/>-->
-                  <newline/>
-		        </group>
-                
-		        <group>
-		          <separator string="Elija la temática(s) para la(s) que aplica:" colspan="4"/>
-		          <field name="tematica_id"/>
-		        </group>
-                <newline/>
-	          </group>
-	        </page>
-	        <page string="Datos Adicionales">
-     	      <h2>Títulos Académicos</h2>
-	          <!--<page string="Títulos">-->
-	          <field name="title_info_ids" nolabel="1">
-		        <tree string="Títulos Académicos">
-		          <field name="name"/>
-		          <field name="register"/>
-		          <field name="date"/>
-		          
-		          <!-- <field name="title_file" filename="title_file_name"/> -->
-		        </tree>	
-	          </field>
-              <h2>Experiencia Docente</h2>
-	          <field name="experience_info_ids" nolabel="1">
-		        <tree string="Subir Certificados">
-		          <field name="name"/>
-		          <field name="finicio"/>
-		          <field name="ffin"/>
-		          <field name="actual"/>
-		          <!--<field name="title_file_name" string="Subir Certificados"/>-->
-		        </tree>	
-	          </field>
-
-	          <h2> Publicaciones </h2>
-	          <field name="publication_info_ids" nolabel="1">
-		        <tree string="Publicaciones">
-		          <field name="name"/>
-		          <field name="date"/>
-		          <field name="description"/>
-		          <!--<field name="title_file_name" string="Publicaciones"/>-->
-		        </tree>	
-	          </field>
-              
-	          <h2> Proyectos de Investigación </h2>
-	          <field name="project_info_ids" nolabel="1">
-		        <tree string="Subir documentación de Proyectos" >
-		          <field name="name"/>
-		          <field name="institucion"/>
-		          <field name="finish"/>
-		          <field name="date"/>
-		          <!--<field name="title_file_name" string="Subir documentación de Proyectos"/>-->
-		        </tree>	
-	          </field>
+	            <h2> Proyectos de Investigación </h2>
+	            <field name="project_info_ids" nolabel="1">
+		          <tree string="Subir documentación de Proyectos" >
+		            <field name="name"/>
+		            <field name="institucion"/>
+		            <field name="finish"/>
+		            <field name="date"/>
+		            <!--<field name="title_file_name" string="Subir documentación de Proyectos"/>-->
+		          </tree>	
+	            </field>
 
 
-	          <div style="margin-top:20px;">
-		        <h2>Indicaciones generales:</h2>
-		        <ul>
-		          <li>Click en <strong>Añadir un elemento</strong> para agregar un registro</li>
+	            <div style="margin-top:20px;">
+		          <h2>Indicaciones generales:</h2>
+		          <ul>
+		            <li>Click en <strong>Añadir un elemento</strong> para agregar un registro</li>
 
-	              <li>Haga click en el botón <strong>Guardar</strong> para registrar sus datos</li>
-	              <!--<li>Para revisar un <strong>Manual de Uso</strong> de este formulario puede descargarlo <a href="http://iaen.edu.ec/wp-content/uploads/2014/09/postulaciones.pdf">aquí</a></li>-->
-		          <li><h3>Se recomienda guardar para que sus datos se almacenen en el sistema</h3></li>
+	                <li>Haga click en el botón <strong>Guardar</strong> para registrar sus datos</li>
+	                <!--<li>Para revisar un <strong>Manual de Uso</strong> de este formulario puede descargarlo <a href="http://iaen.edu.ec/wp-content/uploads/2014/09/postulaciones.pdf">aquí</a></li>-->
+		            <li><h3>Se recomienda guardar para que sus datos se almacenen en el sistema</h3></li>
 
-		        </ul>
-	          </div>
-	          
-	          <!--</page>-->
-	        </page>
+		          </ul>
+	            </div>
+	            
+	            <!--</page>-->
+	          </page>
 
 
-          </notebook>
+            </notebook>
           </sheet>
         </form>
       </field>

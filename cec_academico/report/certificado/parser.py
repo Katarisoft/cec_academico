@@ -45,5 +45,3 @@ class Parser(report_sxw.rml_parse):
         return "%s al %s"%(fi,ff)
         
     #    return "Hello guy, %s!" % self.datas['form']['partner_id']
-
-

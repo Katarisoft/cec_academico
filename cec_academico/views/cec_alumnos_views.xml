@@ -88,25 +88,23 @@
       <field name="arch" type="xml">
         <form string="Registro de usuario" version="8.0">
           <sheet>
-            <field name="image" widget="image" style="margin-left:30px" height="90" width="90"
-                   class="oe_left oe_avatar"
-                   options="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
+            <field name="image" widget="image" style="margin-left:30px" height="90" width="90" class="oe_left oe_avatar" ptions="{&quot;preview_image&quot;: &quot;image_medium&quot;, &quot;size&quot;: [90, 90]}"/>
             <div class="oe_title">
-              <h1>
-                <field name="name" default_focus="1" placeholder="Nombres y Apellidos"/>
-                <field name="email" placeholder="Correo Personal"/>
-              </h1>
-            </div>
+              <label for="name" class="oe_edit_only"/>
+		      <h1><field name="name" default_focus="1" placeholder="Name" on_change="on_name(name)"/></h1>
+              <label for="email" class="oe_edit_only"/>
+              <field name="email" placeholder="Correo Personal"/>
+		    </div>
             <group>
               <group>
                 <separator colspan="4" string="Información"/>
                 <field name="identification_type_id" widget="selection"/>
                 <field name="identification_number"/>
+                <field name="etnia" widget="selection" required="1"/>
                 <label for="phone" string="Teléfono"/>
                 <field name="phone" nolabel="1"/>
                 <label for="mobile" string="Celular"/>
                 <field name="mobile" nolabel="1"/>
-                <field name="etnia" widget="selection"/>
                 <field name="gender_id" widget="selection"/>
                 <field name="nationality_id" widget="selection"/>
                 <field name="disability"/>
