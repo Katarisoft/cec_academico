@@ -101,6 +101,10 @@
                 <field name="identification_type_id" widget="selection"/>
                 <field name="identification_number"/>
                 <field name="etnia" widget="selection" required="1"/>
+                <label for="phone" string="Teléfono"/>
+                <field name="phone" nolabel="1"/>
+                <label for="mobile" string="Celular"/>
+                <field name="mobile" nolabel="1"/>
                 <field name="gender_id" widget="selection"/>
                 <field name="nationality_id" widget="selection"/>
                 <field name="disability"/>
@@ -145,8 +149,6 @@
         </form>
       </field>
     </record>
-
-
 
   </data>
 </openerp>

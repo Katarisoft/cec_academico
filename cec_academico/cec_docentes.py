@@ -270,7 +270,6 @@ class cec_docentes(osv.osv):
         "curriculum": fields.binary("Hoja de Vida", filters=["*.pdf", "*.PDF"]),
         "id_copy": fields.binary("Copia de Cedula o Pasaporte", filters="*.pdf, *.PDF",),
         "title_info_ids": fields.one2many("title.info", "partner_id", "Subir documentacion de Títulos Academicos",),
-        #"proposal_info_ids": fields.one1many("proposal.info", "partner_id", "Propuesta Académica", requiered=False),
         "experience_info_ids": fields.one2many("experience.info", "partner_id", "Subir documentacion de Experiencia Docente",),
         "publication_info_ids": fields.one2many("publication.info", "partner_id", "Subir documetntacion de Publicaciones y Obras",),
         "evaluation_info_ids": fields.one2many("evaluation.info", "partner_id", "Subir documentacion de Evaluaciones de Desempeño",),

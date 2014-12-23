@@ -80,8 +80,4 @@ class cec_alumnos(osv.osv):
         "work_city": fields.many2one("canton", "Ciudad de Trabajo"),
         "work_address": fields.char("Dirección del trabajo", size=255),
         "partner_id": fields.many2one('res.partner', 'partner', required=True, ondelete="cascade"),
-        "is_alumn": fields.boolean("Es alumno?"),
-    }
-    _defaults = {
-        "is_alumn": True
     }
